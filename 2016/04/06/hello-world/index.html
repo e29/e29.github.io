@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/04/06/hello-world/index.html">
 <meta property="og:site_name" content="Need4Spd">
 <meta property="og:description" content="采用Hexo+github pages搭建博客，遇到问题并解决。">
-<meta property="og:updated_time" content="2016-04-06T13:44:26.188Z">
+<meta property="og:updated_time" content="2016-04-07T04:44:43.786Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hello World">
 <meta name="twitter:description" content="采用Hexo+github pages搭建博客，遇到问题并解决。">
@@ -229,9 +229,12 @@
 <p>成功连接后，将Hexo部署到github上：这里要注意，Hexo 3.0.0以上的版本，需要先安装部署插件。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 <p>之后，需要修改目录下的_config.yml文件中的deploy项：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy: </span><br><span class="line">  <span class="built_in">type</span>: gti</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy: </span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 <p>完成后，进行部署：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<h3 id="常见问题-2"><a href="#常见问题-2" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
+<p>type、repo、branch后的冒号均有空格。</p>
+</blockquote>
 
       
     </div>
