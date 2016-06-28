@@ -70,7 +70,7 @@
 						<li>Tags</li>
 						
 						
-						<li>A propos</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -191,7 +191,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Linus曾谈到，他喜欢core low-level coding。今天来用一个简单的例子看一下什么叫core low-level coding。</p>
+        <p>Linus曾谈到，他喜欢core low-level coding。今天来用一个简单的例子看一下什么叫core low-level coding。<br>这个问题是在做一道简单的算法题的时候发现的，自己从来没有看过这样做法，指针真是蕴含着无穷的魅力。</p>
 <hr>
 <h1 id="1-标准化的删除"><a href="#1-标准化的删除" class="headerlink" title="1. 标准化的删除"></a>1. 标准化的删除</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">typedef struct node&#123;</span><br><span class="line">    struct node * next;</span><br><span class="line">    ...</span><br><span class="line">&#125;node;</span><br><span class="line"></span><br><span class="line">typedef bool (* remove_fn)(node const *v);</span><br><span class="line"></span><br><span class="line">node * remove_<span class="keyword">if</span>(node *head, remove_fn rm)&#123;</span><br><span class="line">    <span class="keyword">for</span> (node *prev = NULL, *curr = head; curr != NULL;)&#123;</span><br><span class="line">        node * const next = curr-&gt;next;</span><br><span class="line">        <span class="keyword">if</span> (rm(curr))&#123;</span><br><span class="line">           <span class="keyword">if</span> (prev)&#123;</span><br><span class="line">              prev-&gt;next = next;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">else</span> &#123;</span><br><span class="line">             head = next;</span><br><span class="line">           &#125;</span><br><span class="line">           free(curr);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          curr = next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> head;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
@@ -200,7 +200,7 @@
 <hr>
 <h1 id="2-二级指针"><a href="#2-二级指针" class="headerlink" title="2. 二级指针"></a>2. 二级指针</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void remove_<span class="keyword">if</span>(node **head, remove_fn rm)&#123;</span><br><span class="line">    <span class="keyword">for</span> (node ** curr = head; *curr;)&#123;</span><br><span class="line">        node * entry = *curr;</span><br><span class="line">        <span class="keyword">if</span> (rm(entry))&#123;</span><br><span class="line">           *curr = entry-&gt;next;</span><br><span class="line">           free(entry);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">           curr = &amp;(entry-&gt;next);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
-<p>这里使用的链表指针的指针，curr代表当前结点的next指针的地址，*curr代表了当前结点的next指针，即指向下一结点的指针。<br>这里的关键是：在链表中的链接本身就是指针，所以可以使用指针的指针来作为改变链表的优先选择。</p>
+<p>不再需要previous指针，这里使用的链表指针的指针，curr代表当前结点的next指针的地址，*curr代表了当前结点的next指针，即指向下一结点的指针。<br>比较抽象，画图可以更好的理解，一般，curr指向当前结点，代表其地址，而现在，curr指向当前结点中的next指针域，代表其地址。<br>这里的关键是：在链表中的链接本身就是指针，所以可以使用指针的指针来作为改变链表的优先选择。</p>
 </blockquote>
 <hr>
 <h1 id="3-简单的应用"><a href="#3-简单的应用" class="headerlink" title="3. 简单的应用"></a>3. 简单的应用</h1><p>删除链表中倒数第n个结点，并返回该链表。</p>
