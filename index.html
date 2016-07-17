@@ -103,7 +103,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/Hexo-Github/" style="font-size: 10px;">Hexo Github</a> <a href="/tags/Http-Server、UNIX网络编程、IPC、GDB调试/" style="font-size: 10px;">Http Server、UNIX网络编程、IPC、GDB调试</a> <a href="/tags/Linux-Hexo-Github/" style="font-size: 10px;">Linux Hexo Github</a> <a href="/tags/数据结构、指针、Linxu/" style="font-size: 10px;">数据结构、指针、Linxu</a> <a href="/tags/网站压力测试、fork、UNIX网络编程、IPC、GDB调试、makefile/" style="font-size: 10px;">网站压力测试、fork、UNIX网络编程、IPC、GDB调试、makefile</a>
+						<a href="/tags/HTTP-Server/" style="font-size: 10px;">HTTP Server</a> <a href="/tags/Hexo-Github/" style="font-size: 10px;">Hexo Github</a> <a href="/tags/Linux-Hexo-Github/" style="font-size: 10px;">Linux Hexo Github</a> <a href="/tags/数据结构、指针、Linxu/" style="font-size: 10px;">数据结构、指针、Linxu</a> <a href="/tags/项目、Http-Server、UNIX网络编程、IPC、GDB调试/" style="font-size: 10px;">项目、Http Server、UNIX网络编程、IPC、GDB调试</a> <a href="/tags/项目、网压测试、UNIX网络编程、IPC、GDB调试、makefile/" style="font-size: 10px;">项目、网压测试、UNIX网络编程、IPC、GDB调试、makefile</a>
 					</div>
 				</section>
 				
@@ -340,7 +340,7 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Http-Server、UNIX网络编程、IPC、GDB调试/">Http Server、UNIX网络编程、IPC、GDB调试</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目、Http-Server、UNIX网络编程、IPC、GDB调试/">项目、Http Server、UNIX网络编程、IPC、GDB调试</a></li></ul>
 	</div>
 
       
@@ -401,8 +401,8 @@
 </ul>
 <h1 id="2-URL"><a href="#2-URL" class="headerlink" title="2. URL"></a>2. URL</h1><p>URL(Uniform Resource Locator) 地址用于描述一个网络上的资源。</p>
 <ul>
-<li>格式：schema://host[:port#]/path/…/[;url-params][?query-string][#anchor]<br>|参数|说明|<br>|:—|:—|<br>|scheme|               指定低层使用的协议(例如：http, https, ftp)|<br>|host  |                 HTTP服务器的IP地址或者域名|<br>|　port#|                 HTTP服务器的默认端口是80|<br>|　path |          访问资源的路径|<br>|　url-params| url参数|<br>|　query-string|       发送给http服务器的数据|<br>|　anchor-|             锚|<br>　　<br><strong>例</strong>：</li>
-<li><a href="http://www.mywebsite.com/sj/test;id=8079?name=sviergn&amp;x=true#stuff" target="_blank" rel="external">http://www.mywebsite.com/sj/test;id=8079?name=sviergn&amp;x=true#stuff</a><br>Schema: http<br>host: www.mywebsite.com<br>path: /sj/test<br>URL params: id=8079<br>Query String: name=sviergn&amp;x=true<br>Anchor: stuff</li>
+<li>格式：schema://host[:port#]/path/…/[;url-params][?query-string][#anchor]<br>|参数|说明|<br>|:—|:—|<br>|scheme| 指定低层使用的协议(例如：http, https, ftp)|<br>|host  |  HTTP服务器的IP地址或者域名|<br>|port#|HTTP服务器的默认端口是80|<br>|path |访问资源的路径|<br>|url-params| url参数|<br>|query-string| 发送给http服务器的数据|<br>|anchor-| 锚|<br>　　<br><strong>例</strong>：</li>
+<li>URL：<a href="http://www.mywebsite.com/sj/test;id=8079?name=sviergn&amp;x=true#stuff" target="_blank" rel="external">http://www.mywebsite.com/sj/test;id=8079?name=sviergn&amp;x=true#stuff</a><br>Schema: http<br>host: www.mywebsite.com<br>path: /sj/test<br>URL params: id=8079<br>Query String: name=sviergn&amp;x=true<br>Anchor: stuff</li>
 </ul>
 <h2 id="2-1-HTTP-URL"><a href="#2-1-HTTP-URL" class="headerlink" title="2.1 HTTP URL"></a>2.1 HTTP URL</h2><ul>
 <li>格式：<a href="http://host[&quot;:&quot;port][abs_path" target="_blank" rel="external">http://host[&quot;:&quot;port][abs_path</a>]<br>http表示要通过HTTP协议来定位网络资源；host表示合法的Internet主机域名或者IP地址；port指定一个端口号，为空则使用缺省端口80；abs_path指定请求资源的URI；如果URL中没有给出abs_path，那么当它作为请求URI时，必须以“/”的形式给出，通常这个工作浏览器自动帮我们完成。</li>
@@ -505,45 +505,45 @@
 <table>
 <thead>
 <tr>
-<th style="text-align:center">常见响应状态码</th>
-<th style="text-align:center">状态描述</th>
+<th style="text-align:left">常见响应状态码</th>
+<th style="text-align:left">状态描述</th>
 <th style="text-align:left">说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">200</td>
-<td style="text-align:center">OK</td>
+<td style="text-align:left">200</td>
+<td style="text-align:left">OK</td>
 <td style="text-align:left">客户端请求成功</td>
 </tr>
 <tr>
-<td style="text-align:center">400</td>
-<td style="text-align:center">Bad Request</td>
+<td style="text-align:left">400</td>
+<td style="text-align:left">Bad Request</td>
 <td style="text-align:left">客户端请求有语法错误，不能被服务器所理解</td>
 </tr>
 <tr>
-<td style="text-align:center">401</td>
-<td style="text-align:center">Unauthorized</td>
+<td style="text-align:left">401</td>
+<td style="text-align:left">Unauthorized</td>
 <td style="text-align:left">请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用</td>
 </tr>
 <tr>
-<td style="text-align:center">403</td>
-<td style="text-align:center">Forbidden</td>
+<td style="text-align:left">403</td>
+<td style="text-align:left">Forbidden</td>
 <td style="text-align:left">服务器收到请求，但是拒绝提供服务</td>
 </tr>
 <tr>
-<td style="text-align:center">404</td>
-<td style="text-align:center">Not Found</td>
+<td style="text-align:left">404</td>
+<td style="text-align:left">Not Found</td>
 <td style="text-align:left">请求资源不存在</td>
 </tr>
 <tr>
-<td style="text-align:center">500</td>
-<td style="text-align:center">Internal Server Error</td>
+<td style="text-align:left">500</td>
+<td style="text-align:left">Internal Server Error</td>
 <td style="text-align:left">服务器发生不可预期的错误</td>
 </tr>
 <tr>
-<td style="text-align:center">503</td>
-<td style="text-align:center">Server Unavailable</td>
+<td style="text-align:left">503</td>
+<td style="text-align:left">Server Unavailable</td>
 <td style="text-align:left">服务器当前不能处理客户端的请求，一段时间后可能恢复正常</td>
 </tr>
 </tbody>
@@ -573,7 +573,7 @@
 <li>Accept-Encoding：类似于Accept，但是它是用于指定可接受的内容编码。Accept-Encoding:gzip.deflate.如果请求消息中没有设置这个域服务器假定客户端对各种内容编码都可以接受。</li>
 <li>Accept-Language：类似于Accept，但是它是用于指定一种自然语言。eg：Accept-Language:zh-cn.如果请求消息中没有设置这个报头域，服务器假定客户端对各种语言都可以接受。</li>
 <li>Authorization：主要用于证明客户端有权查看某个资源。当浏览器访问一个页面时，如果收到服务器的响应代码为401（未授权），可以发送一个包含Authorization请求报头域的请求，要求服务器对其进行验证。</li>
-<li>Host（发送请求时，该报头域是必需的）:主要用于指定被请求资源的Internet主机和端口号，它通常从HTTP URL中提取出来的，在浏览器中输入：<a href="http://www.seu.edu.cn/index.html,浏览器发送的请求消息中，就会包含Host请求报头域，如下：Host：www.seu.edu.cn,此处使用缺省端口号80，若指定了端口号，则变成：Host：www.seu.edu.cn:指定端口号。" target="_blank" rel="external">http://www.seu.edu.cn/index.html,浏览器发送的请求消息中，就会包含Host请求报头域，如下：Host：www.seu.edu.cn,此处使用缺省端口号80，若指定了端口号，则变成：Host：www.seu.edu.cn:指定端口号。</a></li>
+<li>Host（发送请求时，该报头域是必需的）:主要用于指定被请求资源的Internet主机和端口号，它通常从HTTP URL中提取出来的，在浏览器中输入：<a href="http://www.seu.edu.cn/index.html" target="_blank" rel="external">http://www.seu.edu.cn/index.html</a>, 浏览器发送的请求消息中，就会包含Host请求报头域，如下：Host：www.seu.edu.cn,此处使用缺省端口号80，若指定了端口号，则变成：Host：www.seu.edu.cn:指定端口号。</li>
 <li>User-Agent：User-Agent请求报头域允许客户端将它的操作系统、浏览器和其它属性告诉服务器。</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET /form.html HTTP/1.1 (CRLF)</span><br><span class="line">Accept:image/gif,image/x-xbitmap,image/jpeg,application/x-shockwave-flash,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/msword,*/* (CRLF)</span><br><span class="line">Accept-Language:zh-cn (CRLF)</span><br><span class="line">Accept-Encoding:gzip,deflate (CRLF)</span><br><span class="line">If-Modified-Since:Wed,05 Jan 2007 11:21:25 GMT (CRLF)</span><br><span class="line">If-None-Match:W/<span class="string">"80b1a4c018f3c41:8317"</span> (CRLF)</span><br><span class="line">User-Agent:Mozilla/4.0(compatible;MSIE6.0;Windows NT 5.0) (CRLF)</span><br><span class="line">Host:www.guet.edu.cn (CRLF)</span><br><span class="line">Connection:Keep-Alive (CRLF)</span><br><span class="line">(CRLF)</span><br></pre></td></tr></table></figure>
@@ -594,7 +594,7 @@
 <li>Last-Modified：用于指示资源的最后修改日期和时间。</li>
 <li>Expires：给出响应过期的日期和时间。为了让代理服务器或浏览器在一段时间以后更新缓存中(再次访问曾访问过的页面时，直接从缓存中加载，缩短响应时间和降低服务器负载)的页面，可以使用Expires实体报头域指定页面过期的时间，Expires：Thu，15 Sep 2006 16:23:12 GMT。HTTP1.1的客户端和缓存必须将其他非法的日期格式（包括0）看作已经过期。为了让浏览器不要缓存页面，我们也可以利用Expires实体报头域，设置为0，jsp中程序如下：response.setDateHeader(“Expires”,”0”)。</li>
 </ul>
-
+<h1 id="6-相关补充"><a href="#6-相关补充" class="headerlink" title="6. 相关补充"></a>6. 相关补充</h1>
       
     </div>
     
@@ -602,7 +602,7 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP-Server/">HTTP Server</a></li></ul>
 	</div>
 
       
@@ -798,7 +798,7 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网站压力测试、fork、UNIX网络编程、IPC、GDB调试、makefile/">网站压力测试、fork、UNIX网络编程、IPC、GDB调试、makefile</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/项目、网压测试、UNIX网络编程、IPC、GDB调试、makefile/">项目、网压测试、UNIX网络编程、IPC、GDB调试、makefile</a></li></ul>
 	</div>
 
       
