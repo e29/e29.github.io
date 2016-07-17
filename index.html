@@ -401,8 +401,46 @@
 </ul>
 <h1 id="2-URL"><a href="#2-URL" class="headerlink" title="2. URL"></a>2. URL</h1><p>URL(Uniform Resource Locator) 地址用于描述一个网络上的资源。</p>
 <ul>
-<li>格式：schema://host[:port#]/path/…/[;url-params][?query-string][#anchor]<br>|参数|说明|<br>|:—|:—|<br>|scheme|指定低层使用的协议(例如\:http, https, ftp)|<br>|host|  HTTP服务器的IP地址或者域名|<br>|port|HTTP服务器的默认端口是80|<br>|path|访问资源的路径|<br>|url-params| url参数|<br>|query-string| 发送给http服务器的数据|<br>|anchor-|锚|</li>
+<li>格式：schema://host[:port#]/path/…/[;url-params][?query-string][#anchor]</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">scheme</td>
+<td style="text-align:left">指定低层使用的协议(例如：http, https, ftp)</td>
+</tr>
+<tr>
+<td style="text-align:left">host</td>
+<td style="text-align:left">HTTP服务器的IP地址或者域名</td>
+</tr>
+<tr>
+<td style="text-align:left">port#</td>
+<td style="text-align:left">HTTP服务器的默认端口是80</td>
+</tr>
+<tr>
+<td style="text-align:left">path</td>
+<td style="text-align:left">访问资源的路径</td>
+</tr>
+<tr>
+<td style="text-align:left">url-params</td>
+<td style="text-align:left">url参数</td>
+</tr>
+<tr>
+<td style="text-align:left">query-string</td>
+<td style="text-align:left">发送给http服务器的数据</td>
+</tr>
+<tr>
+<td style="text-align:left">anchor-</td>
+<td style="text-align:left">锚</td>
+</tr>
+</tbody>
+</table>
 <p><strong>例</strong>：</p>
 <ul>
 <li>URL：<a href="http://www.mywebsite.com/sj/test;id=8079?name=sviergn&amp;x=true#stuff" target="_blank" rel="external">http://www.mywebsite.com/sj/test;id=8079?name=sviergn&amp;x=true#stuff</a><br>Schema: http<br>host: www.mywebsite.com<br>path: /sj/test<br>URL params: id=8079<br>Query String: name=sviergn&amp;x=true<br>Anchor: stuff</li>
