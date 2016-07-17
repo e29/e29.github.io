@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Web Pressure Test | Need4Spd</title>
+  <title>Simple Http Server | Need4Spd</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="学习的第一个项目，源自开源项目Webbench。">
+  <meta name="description" content="学习的第二个项目，源自开源项目TinyHttpd。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Web Pressure Test">
-<meta property="og:url" content="http://yoursite.com/2016/07/01/2016-7-1/index.html">
+<meta property="og:title" content="Simple Http Server">
+<meta property="og:url" content="http://yoursite.com/2016/07/14/2016-7-15/index.html">
 <meta property="og:site_name" content="Need4Spd">
-<meta property="og:description" content="学习的第一个项目，源自开源项目Webbench。">
-<meta property="og:updated_time" content="2016-07-03T09:08:14.933Z">
+<meta property="og:description" content="学习的第二个项目，源自开源项目TinyHttpd。">
+<meta property="og:updated_time" content="2016-07-15T02:32:30.767Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Web Pressure Test">
-<meta name="twitter:description" content="学习的第一个项目，源自开源项目Webbench。">
+<meta name="twitter:title" content="Simple Http Server">
+<meta name="twitter:description" content="学习的第二个项目，源自开源项目TinyHttpd。">
   
     <link rel="alternative" href="/atom.xml" title="Need4Spd" type="application/atom+xml">
   
@@ -164,11 +164,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-2016-7-1" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-2016-7-15" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/07/01/2016-7-1/" class="article-date">
-  	<time datetime="2016-07-01T02:39:00.000Z" itemprop="datePublished">2016-07-01</time>
+      <a href="/2016/07/14/2016-7-15/" class="article-date">
+  	<time datetime="2016-07-14T14:00:00.000Z" itemprop="datePublished">2016-07-14</time>
 </a>
     </div>
   
@@ -181,7 +181,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Web Pressure Test
+      Simple Http Server
     </h1>
   
 
@@ -190,7 +190,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网站压力测试、fork、UNIX网络编程、IPC、GDB调试、makefile/">网站压力测试、fork、UNIX网络编程、IPC、GDB调试、makefile</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Http-Server、UNIX网络编程、IPC、GDB调试/">Http Server、UNIX网络编程、IPC、GDB调试</a></li></ul>
 	</div>
 
         
@@ -201,26 +201,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Web Pressure Test(WPT)是一个在Linux下使用的非常简单的网站压测工具。它使用fork()模拟多个客户端访问设定的URL，测试网站在压力下工作的性能，最多可以模拟3万个并发连接去测试网站的负载能力。</p>
+        <p>Simple Http Server(SHS)是Linux下一个超轻量级的Http Server，可以接受用户的静态或动态请求，对于大致了解服务器的工作流程、熟悉HTTP协议及UNIX网络编程有一定帮助。</p>
 <hr>
-<h1 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1. 项目简介"></a>1. 项目简介</h1><p>一个简单的开源项目，在Linux下用于网站压力测试，内容虽然不多，但涉及方面很全，适合深入学习。</p>
+<h1 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1. 项目简介"></a>1. 项目简介</h1><p>一个简单的开源项目，对于熟悉HTTP协议，服务器的工作流程，特别是UNIX网络编程，有较大的帮助。同时还继续用到了管道等进程间通信的知识。</p>
 <ul>
-<li>socket.c: 定义了Socket函数，用于对socket函数进行包裹。</li>
-<li>wpt.c: 用于命令行解析和创建并发进程，进行压力测试，并显示相应结果。</li>
+<li>httpd.c: 服务器端主程序，用于建立一个http Server。</li>
+<li>simpleclient.c: 服务器简易测试程序，一个客户端，用于测试服务器的连通。</li>
 <li>makefile: 描述了整个工程的编译、连接等规则。</li>
 <li>README.md: 描述了项目的安装及使用方法。</li>
-<li>debain: 包含了项目的更改日志、控制信息、版权及相关规则和目录。</li>
+<li>htdocs: 服务器本地文件夹，包含一些网页和CGI脚本。</li>
 </ul>
-<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
-<p>包裹函数: 完成实际的函数调用，检查返回值，并在发生错误时终止进程，可以通过定义包裹函数来缩短程序。包裹函数名一般是实际函数名的首字母大写形式。</p>
-</blockquote>
 <hr>
-<h1 id="2-核心文件-wpt-c"><a href="#2-核心文件-wpt-c" class="headerlink" title="2. 核心文件: wpt.c"></a>2. 核心文件: wpt.c</h1><p>主要包含以下几个核心函数:</p>
+<h1 id="2-核心文件-httpd-c"><a href="#2-核心文件-httpd-c" class="headerlink" title="2. 核心文件: httpd.c"></a>2. 核心文件: httpd.c</h1><p>主要包含以下几个核心函数:</p>
 <ul>
-<li>main: 主要调用getopt_long函数处理命令行参数，紧接着调用以下函数。</li>
-<li>build_request: 主要用来创建http连接请求。</li>
-<li>bench: 主要用于复制进程，通过子进程来测试http连接，并把测试结果写入管道，再由父进程读取管道信息，计算并输出相关测试信息。</li>
-<li>benchcore: 主要用于子进程对http请求进行测试。</li>
+<li>main:    主要用于创建并监听服务器连接，当有连接到来时，创建线程对其套结字进行处理。</li>
+<li>startup: 主要用于初始化httpd服务，包括socket、bind、listen等。</li>
+<li>accept_request: 主要用于处理从监听套结字上获得的一个HTTP请求。</li>
+<li>get_line: 主要用于读取套结字的一行，把/r/n或/n等结尾都统一为换行结束符/n。</li>
+<li>server_file: 主要用于处理静态请求，主要调用cat函数把服务器文件返回给浏览器。</li>
+<li>execute_cgi: 主要用于处理动态请求，运行CGI处理程序。</li>
+<li>headers: 把HTTP响应的头部写到套结字中。</li>
+<li>cat: 读取服务器上某个文件并写到套结字中。</li>
 </ul>
 <h1 id="3-细节实现"><a href="#3-细节实现" class="headerlink" title="3. 细节实现"></a>3. 细节实现</h1><h2 id="3-1-getopt-long函数"><a href="#3-1-getopt-long函数" class="headerlink" title="3.1 getopt_long函数"></a>3.1 getopt_long函数</h2><ul>
 <li>头文件: <code>#include &lt;getopt.h&gt;</code></li>
@@ -256,7 +257,7 @@
 <p>参数结构sigaction定义如下:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct sigaction &#123;</span><br><span class="line">void (*sa_handler)(int);</span><br><span class="line">void (*sa_sigaction)(int, siginfo_t *, void *);</span><br><span class="line">sigset_t sa_mask;</span><br><span class="line">int sa_flags;</span><br><span class="line">void (*sa_restorer)(void);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>信号处理函数可以采用void (<em>sahandler)(int)或void (</em>sa_sigaction)(int, siginfo_t <em>, void </em>)。到底采用哪个要看sa_flags中是否设置了SA_SIGINFO位，如果设置了就采用void (<em>sa_sigaction)(int, siginfo_t </em>, void <em>)，此时可以向处理函数发送附加信息；默认情况下采用void (</em>sa_handler)(int)，此时只能向处理函数发送信号的数值。</p>
-<h3 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
 <p>使用变量timerexpired来判断连接是否超时，声明为volatile，初始化为0，默认连接成功。当alarm超时后，会设置该变量为1。</p>
 </blockquote>
 <hr>
@@ -350,18 +351,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/07/14/2016-7-14/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          HTTP协议
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/06/28/2016-6-28/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">利用二级指针删除单向链表</div>
+    <a href="/2016/07/14/2016-7-14/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HTTP协议</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -396,7 +388,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="2016-7-1" data-title="Web Pressure Test" data-url="http://yoursite.com/2016/07/01/2016-7-1/"></div>
+	<div class="ds-thread" data-thread-key="2016-7-15" data-title="Simple Http Server" data-url="http://yoursite.com/2016/07/14/2016-7-15/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
