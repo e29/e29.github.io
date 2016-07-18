@@ -14,7 +14,7 @@
 <meta property="og:description" content="后面要做Http Server，先学习铺垫知识，对HTTP协议进行学习。">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png">
-<meta property="og:updated_time" content="2016-07-17T13:18:05.839Z">
+<meta property="og:updated_time" content="2016-07-18T00:50:16.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP协议">
 <meta name="twitter:description" content="后面要做Http Server，先学习铺垫知识，对HTTP协议进行学习。">
@@ -74,7 +74,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -215,6 +215,7 @@
 <li>无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
 <li>无状态：HTTP协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</li>
 </ul>
+<hr>
 <h1 id="2-URL"><a href="#2-URL" class="headerlink" title="2. URL"></a>2. URL</h1><p>URL(Uniform Resource Locator) 地址用于描述一个网络上的资源。</p>
 <ul>
 <li>格式：schema://host[:port#]/path/…/[;url-params][?query-string][#anchor]</li>
@@ -269,9 +270,11 @@
 <li>输入：www.seu.edu.cn 浏览器自动转换成：<a href="http://www.seu.edu.cn/" target="_blank" rel="external">http://www.seu.edu.cn/</a></li>
 <li>http:192.168.0.116:8080/index.jsp </li>
 </ul>
+<hr>
 <h1 id="3-消息格式"><a href="#3-消息格式" class="headerlink" title="3. 消息格式"></a>3. 消息格式</h1><p>HTTP消息由客户端到服务器的请求和服务器到客户端的响应组成。<br>请求消息和响应消息都是由开始行（对于请求消息，开始行就是请求行;对于响应消息，开始行就是状态行），消息报头（可选），空行（只有CRLF的行），消息正文（可选）组成。</p>
 <p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png" alt="请求报文格式"></p>
 <p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png" alt="响应报文格式"></p>
+<hr>
 <h1 id="4-开始行"><a href="#4-开始行" class="headerlink" title="4. 开始行"></a>4. 开始行</h1><h2 id="4-1-请求消息——请求行"><a href="#4-1-请求消息——请求行" class="headerlink" title="4.1 请求消息——请求行"></a>4.1 请求消息——请求行</h2><ul>
 <li>格式：Method Request-URI HTTP-Version CRLF<br>其中Method表示请求方法；Request-URI是一个统一资源标识符；HTTP-Version表示请求的HTTP协议版本；CRLF表示回车和换行（除了作为结尾的CRLF外，不允许出现单独的CR或LF字符）。</li>
 </ul>
@@ -319,11 +322,10 @@
 </table>
 <p><strong>例</strong>：</p>
 <ul>
-<li>GET方法：在浏览器的地址栏中输入网址的方式访问网页时，浏览器采用GET方法向服务器获取资源，例如：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /form.html HTTP/1.1 (CRLF)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>POST方法：要求被请求服务器接受附在请求后面的数据，常用于提交表单。</li>
+<li><p>GET方法：在浏览器的地址栏中输入网址的方式访问网页时，浏览器采用GET方法向服务器获取资源，例：GET /form.html HTTP/1.1。 </p>
+</li>
+<li><p>POST方法：要求被请求服务器接受附在请求后面的数据，常用于提交表单。</p>
+</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">POST /reg.jsp HTTP/ (CRLF)</span><br><span class="line">Accept:image/gif,image/x-xbit,... (CRLF)</span><br><span class="line">...</span><br><span class="line">HOST:www.guet.edu.cn (CRLF)</span><br><span class="line">Content-Length:22 (CRLF)</span><br><span class="line">Connection:Keep-Alive (CRLF)</span><br><span class="line">Cache-Control:no-cache (CRLF)</span><br><span class="line">(CRLF)                    //该CRLF表示消息报头已经结束，在此之前为消息报头</span><br><span class="line">user=jeffrey&amp;<span class="built_in">pwd</span>=1234     //此行以下为提交的数据</span><br></pre></td></tr></table></figure>
 <h2 id="4-2-响应消息——状态行"><a href="#4-2-响应消息——状态行" class="headerlink" title="4.2 响应消息——状态行"></a>4.2 响应消息——状态行</h2><ul>
@@ -409,17 +411,16 @@
 <ul>
 <li>HTTP/1.1 200 OK （CRLF）</li>
 </ul>
-<h1 id="5-消息报头"><a href="#5-消息报头" class="headerlink" title="5. 消息报头"></a>5. 消息报头</h1><p>HTTP消息报头包括普通报头、请求报头、响应报头、实体报头。<br>每一个报头域都是由名字+“：”+空格+值 组成，消息报头域的名字是大小写无关的。</p>
+<hr>
+<h1 id="5-消息报头"><a href="#5-消息报头" class="headerlink" title="5. 消息报头"></a>5. 消息报头</h1><p>HTTP消息报头包括普通报头、请求报头、响应报头、实体报头。<br>每一个报头域都是由名字+“：”+空格+值组成，消息报头域的名字是大小写无关的。</p>
 <h2 id="5-1-普通报头"><a href="#5-1-普通报头" class="headerlink" title="5.1 普通报头"></a>5.1 普通报头</h2><p>在普通报头中，有少数报头域用于所有的请求和响应消息，但并不用于被传输的实体，只用于传输的消息。</p>
 <p><strong>例</strong>：</p>
 <ul>
-<li><p>Cache-Control：用于指定缓存指令，缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（一个消息的缓存指令不会影响另一个消息处理的缓存机制），HTTP1.0使用的类似的报头域为Pragma。<br>请求时的缓存指令包括：no-cache（用于指示请求或响应消息不能缓存）、no-store、max-age、max-stale、min-fresh、only-if-cached;<br>响应时的缓存指令包括：public、private、no-cache、no-store、no-transform、must-revalidate、proxy-revalidate、max-age、s-maxage.</p>
+<li><p>Cache-Control：用于指定缓存指令，缓存指令是单向的（响应中出现的缓存指令在请求中未必会出现），且是独立的（一个消息的缓存指令不会影响另一个消息处理的缓存机制），HTTP1.0使用的类似的报头域为Pragma。<br>请求时的缓存指令包括：no-cache（用于指示请求或响应消息不能缓存）、no-store、max-age、max-stale、min-fresh、only-if-cached;响应时的缓存指令包括：public、private、no-cache、no-store、no-transform、must-revalidate、proxy-revalidate、max-age、s-maxage。为了指示IE浏览器（客户端）不要缓存页面，服务器端的JSP程序可以编写如下：response.setHeader(“Cache-Control”,”no-cache”)。这句代码将在发送的响应消息中设置普通报头域：Cache-Control:no-cache。</p>
 </li>
-<li><p>为了指示IE浏览器（客户端）不要缓存页面，服务器端的JSP程序可以编写如下：response.sehHeader(“Cache-Control”,”no-cache”);<br>response.setHeader(“Pragma”,”no-cache”);作用相当于上述代码，通常两者合用。<br>这句代码将在发送的响应消息中设置普通报头域：Cache-Control:no-cache。</p>
+<li><p>Date：表示消息产生的日期和时间。</p>
 </li>
-<li><p>Date：表示消息产生的日期和时间</p>
-</li>
-<li><p>Connection：允许发送指定连接的选项。例如指定连接是连续，或者指定“close”选项，通知服务器，在响应完成后，关闭连接</p>
+<li><p>Connection：允许发送指定连接的选项。例如指定连接是连续，或者指定“close”选项，通知服务器，在响应完成后，关闭连接。</p>
 </li>
 </ul>
 <h2 id="5-2-请求报头"><a href="#5-2-请求报头" class="headerlink" title="5.2 请求报头"></a>5.2 请求报头</h2><p>请求报头允许客户端向服务器端传递请求的附加信息以及客户端自身的信息。</p>
@@ -430,7 +431,7 @@
 <li>Accept-Encoding：类似于Accept，但是它是用于指定可接受的内容编码。Accept-Encoding:gzip.deflate.如果请求消息中没有设置这个域服务器假定客户端对各种内容编码都可以接受。</li>
 <li>Accept-Language：类似于Accept，但是它是用于指定一种自然语言。eg：Accept-Language:zh-cn.如果请求消息中没有设置这个报头域，服务器假定客户端对各种语言都可以接受。</li>
 <li>Authorization：主要用于证明客户端有权查看某个资源。当浏览器访问一个页面时，如果收到服务器的响应代码为401（未授权），可以发送一个包含Authorization请求报头域的请求，要求服务器对其进行验证。</li>
-<li>Host（发送请求时，该报头域是必需的）:主要用于指定被请求资源的Internet主机和端口号，它通常从HTTP URL中提取出来的，在浏览器中输入：<a href="http://www.seu.edu.cn/index.html" target="_blank" rel="external">http://www.seu.edu.cn/index.html</a>, 浏览器发送的请求消息中，就会包含Host请求报头域，如下：Host：www.seu.edu.cn,此处使用缺省端口号80，若指定了端口号，则变成：Host：www.seu.edu.cn:指定端口号。</li>
+<li>Host（发送请求时，该报头域是必需的）:主要用于指定被请求资源的Internet主机和端口号，它通常从HTTP URL中提取出来的，在浏览器中输入：<a href="http://www.seu.edu.cn/index.html" target="_blank" rel="external">http://www.seu.edu.cn/index.html</a>, 浏览器发送的请求消息中，就会包含Host请求报头域，例：Host：www.seu.edu.cn,此处使用缺省端口号80，若指定了端口号，则变成：Host：www.seu.edu.cn:指定端口号。</li>
 <li>User-Agent：User-Agent请求报头域允许客户端将它的操作系统、浏览器和其它属性告诉服务器。</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET /form.html HTTP/1.1 (CRLF)</span><br><span class="line">Accept:image/gif,image/x-xbitmap,image/jpeg,application/x-shockwave-flash,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/msword,*/* (CRLF)</span><br><span class="line">Accept-Language:zh-cn (CRLF)</span><br><span class="line">Accept-Encoding:gzip,deflate (CRLF)</span><br><span class="line">If-Modified-Since:Wed,05 Jan 2007 11:21:25 GMT (CRLF)</span><br><span class="line">If-None-Match:W/<span class="string">"80b1a4c018f3c41:8317"</span> (CRLF)</span><br><span class="line">User-Agent:Mozilla/4.0(compatible;MSIE6.0;Windows NT 5.0) (CRLF)</span><br><span class="line">Host:www.guet.edu.cn (CRLF)</span><br><span class="line">Connection:Keep-Alive (CRLF)</span><br><span class="line">(CRLF)</span><br></pre></td></tr></table></figure>
@@ -439,7 +440,7 @@
 <ul>
 <li>Location：用于重定向接受者到一个新的位置。Location响应报头域常用在更换域名的时候。</li>
 <li>Server：包含了服务器用来处理请求的软件信息。与User-Agent请求报头域是相对应的，Server：Apache-Coyote/1.1。</li>
-<li>WWW-Authenticate：必须被包含在401（未授权的）响应消息中，客户端收到401响应消息时候，并发送Authorization报头域请求服务器对其进行验证时，服务端响应报头就包含该报头域，WWW-Authenticate:Basic realm=”Basic Auth Test!”  //可以看出服务器对请求资源采用的是基本验证机制。</li>
+<li>WWW-Authenticate：必须被包含在401（未授权的）响应消息中，客户端收到401响应消息时候，并发送Authorization报头域请求服务器对其进行验证时，服务端响应报头就包含该报头域，WWW-Authenticate:Basic realm=”Basic Auth Test!”，可以看出服务器对请求资源采用的是基本验证机制。</li>
 </ul>
 <h2 id="5-4-实体报头"><a href="#5-4-实体报头" class="headerlink" title="5.4 实体报头"></a>5.4 实体报头</h2><p>请求和响应消息都可以传送一个实体。一个实体由实体报头域和实体正文组成，但并不是说实体报头域和实体正文要在一起发送，可以只发送实体报头域。实体报头定义了关于实体正文（有无实体正文）和请求所标识的资源的元信息。</p>
 <p><strong>例</strong>：</p>
@@ -449,9 +450,59 @@
 <li>Content-Length：用于指明实体正文的长度，以字节方式存储的十进制数字来表示。</li>
 <li>Content-Type：用语指明发送给接收者的实体正文的媒体类型，Content-Type:text/html;charset=ISO-8859-1。</li>
 <li>Last-Modified：用于指示资源的最后修改日期和时间。</li>
-<li>Expires：给出响应过期的日期和时间。为了让代理服务器或浏览器在一段时间以后更新缓存中(再次访问曾访问过的页面时，直接从缓存中加载，缩短响应时间和降低服务器负载)的页面，可以使用Expires实体报头域指定页面过期的时间，Expires：Thu，15 Sep 2006 16:23:12 GMT。HTTP1.1的客户端和缓存必须将其他非法的日期格式（包括0）看作已经过期。为了让浏览器不要缓存页面，我们也可以利用Expires实体报头域，设置为0，jsp中程序如下：response.setDateHeader(“Expires”,”0”)。</li>
+<li>Expires：给出响应过期的日期和时间。为了让代理服务器或浏览器在一段时间以后更新缓存中(再次访问曾访问过的页面时，直接从缓存中加载，缩短响应时间和降低服务器负载)的页面，可以使用Expires实体报头域指定页面过期的时间，Expires：Thu，15 Sep 2006 16:23:12 GMT。HTTP1.1的客户端和缓存必须将其他非法的日期格式（包括0）看作已经过期。为了让浏览器不要缓存页面，也可以利用Expires实体报头域，设置为0，jsp中程序如下：response.setDateHeader(“Expires”,”0”)。</li>
 </ul>
-<h1 id="6-相关补充"><a href="#6-相关补充" class="headerlink" title="6. 相关补充"></a>6. 相关补充</h1>
+<hr>
+<h1 id="6-相关补充"><a href="#6-相关补充" class="headerlink" title="6. 相关补充"></a>6. 相关补充</h1><p>HTTP1.0和HTTP1.1的区别？</p>
+<h2 id="6-1-可扩展性"><a href="#6-1-可扩展性" class="headerlink" title="6.1 可扩展性"></a>6.1 可扩展性</h2><p>可扩展性的一个重要原则：如果HTTP的某个实现接收到了自身未定义的头域，将自动忽略它。</p>
+<ul>
+<li>在消息中增加版本号，用于兼容性判断。注意，版本号只能用来判断逐段（hop-by-hop）的兼容性，而无法判断端到端（end-to-end）的兼容性。例如，一台HTTP/1.1的源服务器从使用HTTP/1.1的Proxy那儿接收到一条转发的消息，实际上源服务器并不知道终端客户使用的是HTTP/1.0还是HTTP/1.1。因此，HTTP/1.1定义Via头域，用来记录消息转发的路径，它记录了整个路径上所有发送方使用的版本号。</li>
+<li>HTTP/1.1增加了OPTIONS方法，它允许客户端获取一个服务器支持的方法列表。</li>
+<li>为了与未来的协议规范兼容，HTTP/1.1在请求消息中包含了Upgrade头域，通过该头域，客户端可以让服务器知道它能够支持的其它备用通信协议，服务器可以据此进行协议切换，使用备用协议与客户端进行通信。</li>
+</ul>
+<h2 id="6-2-缓存"><a href="#6-2-缓存" class="headerlink" title="6.2 缓存"></a>6.2 缓存</h2><p>HTTP/1.0中，使用Expire头域来判断资源的fresh或stale，并使用条件请求（conditional request）来判断资源是否仍有效。例如，cache服务器通过If-Modified-Since头域向服务器验证资源的Last-Modefied头域是否有更新，源服务器可能返回304（Not Modified），则表明该对象仍有效；也可能返回200（OK）替换请求的Cache对象。此外，HTTP/1.0中还定义了Pragma:no-cache头域，客户端使用该头域说明请求资源不能从cache中获取，而必须回源获取。</p>
+<ul>
+<li>HTTP/1.1在1.0的基础上加入了一些cache的新特性，当缓存对象的Age超过Expire时变为stale对象，cache不需要直接抛弃stale对象，而是与源服务器进行重新激活（revalidation）。</li>
+<li>HTTP/1.0中，If-Modified-Since头域使用的是绝对时间戳，精确到秒，但使用绝对时间会带来不同机器上的时钟同步问题。而HTTP/1.1中引入了一个ETag头域用于重激活机制，它的值entity tag可以用来唯一的描述一个资源。请求消息中可以使用If-None-Match头域来匹配资源的entitytag是否有变化。</li>
+<li>为了使caching机制更加灵活，HTTP/1.1增加了Cache-Control头域（请求消息和响应消息都可使用），它支持一个可扩展的指令子集：例如max-age指令支持相对时间戳；private和no-store指令禁止对象被缓存；no-transform阻止Proxy进行任何改变响应的行为。</li>
+<li>Cache使用关键字索引在磁盘中缓存的对象，在HTTP/1.0中使用资源的URL作为关键字。但可能存在不同的资源基于同一个URL的情况，要区别它们还需要客户端提供更多的信息，如Accept-Language和Accept-Charset头域。为了支持这种内容协商机制(content negotiation mechanism)，HTTP/1.1在响应消息中引入了Vary头域，该头域列出了请求消息中需要包含哪些头域用于内容协商。</li>
+</ul>
+<h2 id="6-3-带宽优化"><a href="#6-3-带宽优化" class="headerlink" title="6.3 带宽优化"></a>6.3 带宽优化</h2><p>HTTP/1.0中，存在一些浪费带宽的现象，例如客户端只是需要某个对象的一部分，而服务器却将整个对象送过来了。例如，客户端只需要显示一个文档的部分内容，又比如下载大文件时需要支持断点续传功能，而不是在发生断连后不得不重新下载完整的包。</p>
+<ul>
+<li>HTTP/1.1中在请求消息中引入了range头域，它允许只请求资源的某个部分。在响应消息中Content-Range头域声明了返回的这部分对象的偏移值和长度。如果服务器相应地返回了对象所请求范围的内容，则响应码为206（Partial Content），它可以防止Cache将响应误以为是完整的一个对象。<br>另外一种情况是请求消息中如果包含比较大的实体内容，但不确定服务器是否能够接收该请求（如是否有权限），此时若贸然发出带实体的请求，如果被拒绝也会浪费带宽。</li>
+<li>HTTP/1.1加入了一个新的状态码100（Continue）。客户端事先发送一个只带头域的请求，如果服务器因为权限拒绝了请求，就回送响应码401（Unauthorized）；如果服务器接收此请求就回送响应码100，客户端就可以继续发送带实体的完整请求了。注意，HTTP/1.0的客户端不支持100响应码。但可以让客户端在请求消息中加入Expect头域，并将它的值设置为100-continue。</li>
+</ul>
+<p>节省带宽资源的一个非常有效的做法就是压缩要传送的数据。Content-Encoding是对消息进行端到端（end-to-end）的编码，它可能是资源在服务器上保存的固有格式（如jpeg图片格式）；在请求消息中加入Accept-Encoding头域，它可以告诉服务器客户端能够解码的编码方式。而Transfer-Encoding是逐段式（hop-by-hop）的编码，如Chunked编码。在请求消息中加入TE头域用来告诉服务器能够接收的transfer-coding方式。</p>
+<h2 id="6-4-长连接"><a href="#6-4-长连接" class="headerlink" title="6.4 长连接"></a>6.4 长连接</h2><p>HTTP 1.0规定浏览器与服务器只保持短暂的连接，浏览器的每次请求都需要与服务器建立一个TCP连接，服务器完成请求处理后立即断开TCP连接，服务器不跟踪每个客户也不记录过去的请求。此外，由于大多数网页的流量都比较小，一次TCP连接很少能通过slow-start区，不利于提高带宽利用率。</p>
+<ul>
+<li>HTTP 1.1支持长连接（PersistentConnection）和请求的流水线（Pipelining）处理，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟。例如：一个包含有许多图像的网页文件的多个请求和应答可以在一个连接中传输，但每个单独的网页文件的请求和应答仍然需要使用各自的连接。</li>
+<li>HTTP 1.1还允许客户端不用等待上一次请求结果返回，就可以发出下一次请求，但服务器端必须按照接收到客户端请求的先后顺序依次回送响应结果，以保证客户端能够区分出每次请求的响应内容，这样也显著地减少了整个下载过程所需要的时间。</li>
+</ul>
+<p>在HTTP/1.0中，要建立长连接，可以在请求消息中包含Connection: Keep-Alive头域，如果服务器愿意维持这条连接，在响应消息中也会包含一个Connection: Keep-Alive的头域。同时，可以加入一些指令描述该长连接的属性，如max，timeout等。<br>事实上，Connection头域可以携带三种不同类型的符号：</p>
+<ul>
+<li>一个包含若干个头域名的列表，声明仅限于一次hop连接的头域信息；</li>
+<li>任意值，本次连接的非标准选项，如Keep-Alive等；</li>
+<li>close值，表示消息传送完成之后关闭长连接；</li>
+</ul>
+<p>客户端和源服务器之间的消息传递可能要经过很多中间节点的转发，这是一种逐跳传递（hop-by-hop）。</p>
+<ul>
+<li>HTTP/1.1相应地引入了hop-by-hop头域，这种头域仅作用于一次hop，而非整个传递路径。每一个中间节点（如Proxy，Gateway）接收到的消息中如果包含Connection头域，会查找Connection头域中的一个头域名列表，并在将消息转发给下一个节点之前先删除消息中这些头域。通常，HTTP/1.0的Proxy不支持Connection头域，为了不让它们转发可能误导接收者的头域，协议规定所有出现在Connection头域中的头域名都将被忽略。</li>
+</ul>
+<h2 id="6-5-消息传递"><a href="#6-5-消息传递" class="headerlink" title="6.5 消息传递"></a>6.5 消息传递</h2><p>HTTP消息中可以包含任意长度的实体，通常它们使用Content-Length来给出消息结束标志。但是，对于很多动态产生的响应，只能通过缓冲完整的消息来判断消息的大小，但这样做会加大延迟。如果不使用长连接，还可以通过连接关闭的信号来判定一个消息的结束。</p>
+<ul>
+<li>HTTP/1.1中引入了Chunkedtransfer-coding来解决上面这个问题，发送方将消息分割成若干个任意大小的数据块，每个数据块在发送时都会附上块的长度，最后用一个零长度的块作为消息结束的标志。这种方法允许发送方只缓冲消息的一个片段，避免缓冲整个消息带来的过载。</li>
+<li>在HTTP/1.0中，有一个Content-MD5的头域，要计算这个头域需要发送方缓冲完整个消息后才能进行。而HTTP/1.1中，采用chunked分块传递的消息在最后一个块（零长度）结束之后会再传递一个拖尾（trailer），它包含一个或多个头域，这些头域是发送方在传递完所有块之后再计算出值的。发送方会在消息中包含一个Trailer头域告诉接收方这个拖尾的存在。</li>
+</ul>
+<h2 id="6-6-Host头域"><a href="#6-6-Host头域" class="headerlink" title="6.6 Host头域"></a>6.6 Host头域</h2><p>在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名（hostname）。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个IP地址。</p>
+<ul>
+<li>HTTP1.1的请求消息和响应消息都应支持Host头域，且请求消息中如果没有Host头域会报告一个错误（400 Bad Request）。此外，服务器应该接受以绝对路径标记的资源请求。</li>
+</ul>
+<h2 id="6-7-错误提示"><a href="#6-7-错误提示" class="headerlink" title="6.7 错误提示"></a>6.7 错误提示</h2><ul>
+<li>HTTP/1.0中只定义了16个状态响应码，对错误或警告的提示不够具体。HTTP/1.1引入了一个Warning头域，增加对错误或警告信息的描述。</li>
+<li>此外，在HTTP/1.1中新增了24个状态响应码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</li>
+</ul>
+<h2 id="6-8-内容协商"><a href="#6-8-内容协商" class="headerlink" title="6.8 内容协商"></a>6.8 内容协商</h2><p>为了满足互联网使用不同母语和字符集的用户，一些网络资源有不同的语言版本（如中文版、英文版）。HTTP/1.0定义了内容协商（contentnegotiation）的概念，也就是说客户端可以告诉服务器自己可以接收以何种语言（或字符集）表示的资源。例如如果服务器不能明确客户端需要何种类型的资源，会返回300（Multiple Choices），并包含一个列表，用来声明该资源的不同可用版本，然后客户端在请求消息中包含Accept-Language和Accept-Charset头域指定需要的版本。<br>就像有些人会说几门外语，但每种外语的流利程度并不相同。类似地，网络资源也可以有不同的表达形式，比如有母语版和各种翻译版本。HTTP引入了一个品质因子（quality values）的概念来表示不同版本的可用性，它的取值从0.0到1.0。例如一个母语是英语的人也能讲法语、甚至还学了点丹麦语，那么他的浏览器可用作如下配置：Accept-Language: en, fr;q=0.5, da;q=0.1。这时，服务器会优先选取品质因子高的值对应的资源版本作为响应。</p>
+
       
     </div>
     
