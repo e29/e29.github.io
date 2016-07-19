@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time1.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time2.png">
-<meta property="og:updated_time" content="2016-07-19T08:31:44.445Z">
+<meta property="og:updated_time" content="2016-07-19T08:41:58.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Simple Http Server">
 <meta name="twitter:description" content="学习的第二个项目，源自开源项目TinyHttpd。">
@@ -290,82 +290,102 @@
 <tbody>
 <tr>
 <td style="text-align:left">S_IFMT</td>
+<td style="text-align:left">0170000</td>
 <td style="text-align:left">文件类型选择</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IFSOCK</td>
+<td style="text-align:left">0140000</td>
 <td style="text-align:left">socket</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IFLNK</td>
+<td style="text-align:left">0120000</td>
 <td style="text-align:left">符号连接</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IFREG</td>
+<td style="text-align:left">0100000</td>
 <td style="text-align:left">一般文件</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IFBLK</td>
+<td style="text-align:left">0060000</td>
 <td style="text-align:left">区块装置</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IFDIR</td>
+<td style="text-align:left">0040000</td>
 <td style="text-align:left">目录</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IFCHR</td>
+<td style="text-align:left">0020000</td>
 <td style="text-align:left">字符装置</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IFIFO</td>
+<td style="text-align:left">0010000</td>
 <td style="text-align:left">先进先出</td>
 </tr>
 <tr>
 <td style="text-align:left">S_ISUID</td>
+<td style="text-align:left">04000</td>
 <td style="text-align:left">文件的SUID</td>
 </tr>
 <tr>
 <td style="text-align:left">S_ISGID</td>
+<td style="text-align:left">02000</td>
 <td style="text-align:left">文件的SGID</td>
 </tr>
 <tr>
 <td style="text-align:left">S_ISVTX</td>
+<td style="text-align:left">01000</td>
 <td style="text-align:left">文件的sticky位</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IRUSR(S_IREAD)</td>
+<td style="text-align:left">00400</td>
 <td style="text-align:left">文件所有者具可读取权限</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IWUSR(S_IWRITE)</td>
+<td style="text-align:left">00200</td>
 <td style="text-align:left">文件所有者具可写入权限</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IXUSR(S_IEXEC)</td>
+<td style="text-align:left">00100</td>
 <td style="text-align:left">文件所有者具可执行权限</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IRGRP</td>
+<td style="text-align:left">00040</td>
 <td style="text-align:left">用户组具可读取权限</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IWGRP</td>
+<td style="text-align:left">00020</td>
 <td style="text-align:left">用户组具可写入权限</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IXGRP</td>
+<td style="text-align:left">00010</td>
 <td style="text-align:left">用户组具可执行权限</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IROTH</td>
+<td style="text-align:left">00004</td>
 <td style="text-align:left">其他用户具可读取权限</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IWOTH</td>
+<td style="text-align:left">00002</td>
 <td style="text-align:left">其他用户具可写入权限</td>
 </tr>
 <tr>
 <td style="text-align:left">S_IXOTH</td>
+<td style="text-align:left">00001</td>
 <td style="text-align:left">其他用户具可执行权限</td>
 </tr>
 </tbody>
@@ -382,9 +402,8 @@
 <h3 id="调试问题1"><a href="#调试问题1" class="headerlink" title="调试问题1"></a>调试问题1</h3><blockquote>
 <p>在创建线程时，有时会自动的创建两个线程，没有找到原因，继续运行时，最后都以SIGPIPE信号终止。信号的原因：连接建立，若某一端关闭连接，而另一端仍然向它写数据，第一次写数据后会收到RST响应，此后再写数据，内核将向进程发出SIGPIPE信号，通知进程此连接已经断开。而SIGPIPE信号的默认处理是终止程序，导致上述问题的发生。</p>
 </blockquote>
-<p>运行结果：</p>
-<p>显示颜色：<br><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue1.png" alt="blue1"><br><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue2.png" alt="blue2"></p>
-<p>显示服务器时间：<br><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time1.png" alt="time1"><br><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time2.png" alt="time2"></p>
+<h2 id="显示颜色："><a href="#显示颜色：" class="headerlink" title="显示颜色："></a><strong>显示颜色</strong>：</h2><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue1.png" alt="blue1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue2.png" alt="blue2"></p>
+<h2 id="显示服务器时间："><a href="#显示服务器时间：" class="headerlink" title="显示服务器时间："></a><strong>显示服务器时间</strong>：</h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time1.png" alt="time1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time2.png" alt="time2"></p>
 <hr>
 <h1 id="5-完善与维护"><a href="#5-完善与维护" class="headerlink" title="5. 完善与维护"></a>5. 完善与维护</h1><p>完成后，将项目上传至Github维护。</p>
 <blockquote>
