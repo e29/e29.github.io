@@ -12,10 +12,12 @@
 <meta property="og:url" content="http://yoursite.com/2016/05/15/Web-Pressure-Test/index.html">
 <meta property="og:site_name" content="Need4Spd">
 <meta property="og:description" content="学习的第一个项目，源自开源项目Webbench。">
-<meta property="og:updated_time" content="2016-07-22T09:43:34.955Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/pipe.PNG">
+<meta property="og:updated_time" content="2016-07-23T05:53:47.472Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web Pressure Test">
 <meta name="twitter:description" content="学习的第一个项目，源自开源项目Webbench。">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/pipe.PNG">
   
     <link rel="alternative" href="/atom.xml" title="Need4Spd" type="application/atom+xml">
   
@@ -71,7 +73,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -246,7 +248,8 @@
 <li>strncasecmp(s1,s2): 比较参数s1和s2字符串前n个字符，比较时会自动忽略大小写的差异。如果相同，返回0；s1&gt;s2，返回大于0的值；s1&lt;s2，返回小于0的值。</li>
 <li>strcspn(s,reject): 参数s字符串的开头计算连续的字符, 而这些字符都完全不在参数reject 所指的字符串中.简单地说,若strcspn()返回的数值为n,则代表字符串s开头连续有n个字符都不含字符串reject 内的字符。</li>
 </ul>
-<h2 id="3-3-bench函数"><a href="#3-3-bench函数" class="headerlink" title="3.3 bench函数"></a>3.3 bench函数</h2><p>通过主机名和端口号建立套结字，并测试管道的可用性，使用fork函数创建子进程，在子进程中fork返回0，在父进程中返回大于0的值，出错则返回小于0的值。利用pid，让子进程向管道中写数据，包括速度，失败数和大小；父进程从管道中读取这些值，计算后输出。</p>
+<h2 id="3-3-bench函数"><a href="#3-3-bench函数" class="headerlink" title="3.3 bench函数"></a>3.3 bench函数</h2><p>通过主机名和端口号建立套结字，并测试管道的可用性，使用fork函数创建子进程，在子进程中fork返回0，在父进程中返回大于0的值，出错则返回小于0的值。利用pid，让子进程向管道中写数据，包括速度，失败数和大小；父进程从管道中读取这些值，计算后输出。这里只需使用一个简单的单向数据流管道即可，如下图所示。</p>
+<p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/pipe.PNG" alt="管道示意图"></p>
 <h2 id="3-4-benchcore函数"><a href="#3-4-benchcore函数" class="headerlink" title="3.4 benchcore函数"></a>3.4 benchcore函数</h2><p>进行压力测试的核心函数。使用alarm函数计时并发送SIGALRM信号。遇到超时、套结字建立不成功、连接不成功、关闭套结字不成功等都算失败。</p>
 <ul>
 <li>头文件: <code>#include &lt;signal.h&gt;</code></li>

@@ -70,7 +70,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -165,10 +165,10 @@
 
       <div class="body-wrap">
   
-    <article id="post-Http-Sever" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Http-Server" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/15/Http-Sever/" class="article-date">
+      <a href="/2016/06/15/Http-Server/" class="article-date">
   	<time datetime="2016-06-15T14:00:00.000Z" itemprop="datePublished">2016-06-15</time>
 </a>
     </div>
@@ -182,7 +182,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/15/Http-Sever/">Simple Http Server</a>
+      <a class="article-title" href="/2016/06/15/Http-Server/">Simple Http Server</a>
     </h1>
   
 
@@ -376,7 +376,8 @@
 </tbody>
 </table>
 <p>通过该函数对文件权限进行判断，判断是否具有可执行权限，如果有，就调用函数execute_cgi执行动态脚本，否则，调用函数server_file返回静态页面。</p>
-<h2 id="3-4-execute-cgi函数"><a href="#3-4-execute-cgi函数" class="headerlink" title="3.4 execute_cgi函数"></a>3.4 execute_cgi函数</h2><p>此函数用来执行动态脚本，以显示颜色为例。打开网页，连接服务器后，输入颜色，点击“Submit”后，传递HTTP的POST请求到服务器，服务器解析后得到method、path以及query_string。将这些参数传递给该函数，创建子进程，建立管道。从客户浏览器传入的POST数据，由父进程写入管道cgi_input；子进程从STDIN接受数据，即管道cgi_input，负责设置环境变量，并执行execl函数，结果将被传入STDOUT，到达管道cgi_output，父进程从cgi_output中读取相关信息返回给客户浏览器。</p>
+<h2 id="3-4-execute-cgi函数"><a href="#3-4-execute-cgi函数" class="headerlink" title="3.4 execute_cgi函数"></a>3.4 execute_cgi函数</h2><p>此函数用来执行动态脚本，以显示颜色为例。打开网页，连接服务器后，输入颜色，点击“Submit”后，传递HTTP的POST请求到服务器，服务器解析后得到method、path以及query_string。将这些参数传递给该函数，创建子进程，建立管道。从客户浏览器传入的POST数据，由父进程写入管道cgi_input；子进程从STDIN接受数据，即管道cgi_input，负责设置环境变量，并执行execl函数，结果将被传入STDOUT，到达管道cgi_output，父进程从cgi_output中读取相关信息返回给客户浏览器。这里需要使用一个双向数据流管道，如下图所示。</p>
+<p><img src="https://github.com/e29/e29.github.io/blob/master/images/double%20pipe.PNG" alt="管道示意图"></p>
 <h3 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
 <p>CGI程序的特点是通过标准输入（stdin）和环境变量(可以理解成有两个传递数据的途径，二者相辅相成，其实跟请求方法是get或post也相关)来得到服务器的信息，并通过标准输出（stdout）向服务器输出信息。</p>
 </blockquote>
@@ -852,7 +853,8 @@
 <li>strncasecmp(s1,s2): 比较参数s1和s2字符串前n个字符，比较时会自动忽略大小写的差异。如果相同，返回0；s1&gt;s2，返回大于0的值；s1&lt;s2，返回小于0的值。</li>
 <li>strcspn(s,reject): 参数s字符串的开头计算连续的字符, 而这些字符都完全不在参数reject 所指的字符串中.简单地说,若strcspn()返回的数值为n,则代表字符串s开头连续有n个字符都不含字符串reject 内的字符。</li>
 </ul>
-<h2 id="3-3-bench函数"><a href="#3-3-bench函数" class="headerlink" title="3.3 bench函数"></a>3.3 bench函数</h2><p>通过主机名和端口号建立套结字，并测试管道的可用性，使用fork函数创建子进程，在子进程中fork返回0，在父进程中返回大于0的值，出错则返回小于0的值。利用pid，让子进程向管道中写数据，包括速度，失败数和大小；父进程从管道中读取这些值，计算后输出。</p>
+<h2 id="3-3-bench函数"><a href="#3-3-bench函数" class="headerlink" title="3.3 bench函数"></a>3.3 bench函数</h2><p>通过主机名和端口号建立套结字，并测试管道的可用性，使用fork函数创建子进程，在子进程中fork返回0，在父进程中返回大于0的值，出错则返回小于0的值。利用pid，让子进程向管道中写数据，包括速度，失败数和大小；父进程从管道中读取这些值，计算后输出。这里只需使用一个简单的单向数据流管道即可，如下图所示。</p>
+<p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/pipe.PNG" alt="管道示意图"></p>
 <h2 id="3-4-benchcore函数"><a href="#3-4-benchcore函数" class="headerlink" title="3.4 benchcore函数"></a>3.4 benchcore函数</h2><p>进行压力测试的核心函数。使用alarm函数计时并发送SIGALRM信号。遇到超时、套结字建立不成功、连接不成功、关闭套结字不成功等都算失败。</p>
 <ul>
 <li>头文件: <code>#include &lt;signal.h&gt;</code></li>
