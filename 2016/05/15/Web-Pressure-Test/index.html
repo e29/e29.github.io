@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Need4Spd">
 <meta property="og:description" content="学习的第一个项目，源自开源项目Webbench。">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/pipe.PNG">
-<meta property="og:updated_time" content="2016-08-05T01:30:03.461Z">
+<meta property="og:updated_time" content="2016-08-05T07:26:59.834Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web Pressure Test">
 <meta name="twitter:description" content="学习的第一个项目，源自开源项目Webbench。">
@@ -73,7 +73,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -221,8 +221,8 @@
 <ul>
 <li>main: 主要调用getopt_long函数处理命令行参数，紧接着调用以下函数。</li>
 <li>build_request: 主要用来创建http连接请求。</li>
-<li>bench: 主要用于复制进程，通过子进程来测试http连接，并把测试结果写入管道，再由父进程读取管道信息，计算并输出相关测试信息。</li>
-<li>benchcore: 主要用于子进程对http请求进行测试。</li>
+<li>wpt: 主要用于复制进程，通过子进程来测试http连接，并把测试结果写入管道，再由父进程读取管道信息，计算并输出相关测试信息。</li>
+<li>wptcore: 主要用于子进程对http请求进行测试。</li>
 </ul>
 <h1 id="3-细节实现"><a href="#3-细节实现" class="headerlink" title="3. 细节实现"></a>3. 细节实现</h1><h2 id="3-1-getopt-long函数"><a href="#3-1-getopt-long函数" class="headerlink" title="3.1 getopt_long函数"></a>3.1 getopt_long函数</h2><ul>
 <li>头文件: <code>#include &lt;getopt.h&gt;</code></li>
@@ -240,17 +240,20 @@
 <h3 id="设计方法"><a href="#设计方法" class="headerlink" title="设计方法"></a>设计方法</h3><blockquote>
 <p>通过while循环+switch…case…语句配合处理命令行选项，并结合optarg和optind检查参数的合法性。</p>
 </blockquote>
-<h2 id="3-2-build-request函数"><a href="#3-2-build-request函数" class="headerlink" title="3.2 build_request函数"></a>3.2 build_request函数</h2><p>主要用一些基本的C字符函数处理请求方法和有代理或无代理情况下的主机名。</p>
+<h2 id="3-2-build-request函数"><a href="#3-2-build-request函数" class="headerlink" title="3.2 build_request函数"></a>3.2 build_request函数</h2><p>主要用一些基本的C字符函数处理有代理或无代理情况下的主机名和段口号，并生成相应的请求消息。如果有代理，则直接根据请求方法和url生成request消息；如果没有代理，则采用url中的域名作为主机名，如果url中含有端口，则采用相应的端口，否则采用默认端口80。</p>
 <ul>
-<li>strchr(string,char): 查找字符串中首次出现指定字符的位置，如果成功，返回该字符以及其后面的字符，如果失败，则返回NULL。</li>
-<li>strrchr(string,char): 查找字符在指定字符串中从正面开始的最后一次出现的位置，如果成功，返回该字符以及其后面的字符，如果失败，则返回NULL。</li>
-<li>strstr(str1,str2): 判断字符串str2是否是str1的子串。如果是，则该函数返回str2在str1中首次出现的地址；否则，返回NULL。</li>
-<li>strncasecmp(s1,s2): 比较参数s1和s2字符串前n个字符，比较时会自动忽略大小写的差异。如果相同，返回0；s1&gt;s2，返回大于0的值；s1&lt;s2，返回小于0的值。</li>
-<li>strcspn(s,reject): 参数s字符串的开头计算连续的字符, 而这些字符都完全不在参数reject 所指的字符串中.简单地说,若strcspn()返回的数值为n,则代表字符串s开头连续有n个字符都不含字符串reject 内的字符。</li>
+<li>strchr(string, char): 查找字符串中首次出现指定字符的位置，如果成功，返回该字符以及其后面的字符，如果失败，则返回NULL。</li>
+<li>strrchr(string, char): 查找字符在指定字符串中从正面开始的最后一次出现的位置，如果成功，返回该字符以及其后面的字符，如果失败，则返回NULL。</li>
+<li>strstr(str1, str2): 判断字符串str2是否是str1的子串。如果是，则该函数返回str2在str1中首次出现的地址；否则，返回NULL。</li>
+<li>strncasecmp(s1, s2): 比较参数s1和s2字符串前n个字符，比较时会自动忽略大小写的差异。如果相同，返回0；s1&gt;s2，返回大于0的值；s1&lt;s2，返回小于0的值。</li>
+<li>strcspn(s, reject): 参数s字符串的开头计算连续的字符, 而这些字符都完全不在参数reject 所指的字符串中.简单地说,若strcspn()返回的数值为n,则代表字符串s开头连续有n个字符都不含字符串reject 内的字符。</li>
 </ul>
-<h2 id="3-3-bench函数"><a href="#3-3-bench函数" class="headerlink" title="3.3 bench函数"></a>3.3 bench函数</h2><p>通过主机名和端口号建立套结字，并测试管道的可用性，使用fork函数创建子进程，在子进程中fork返回0，在父进程中返回大于0的值，出错则返回小于0的值。利用pid，让子进程向管道中写数据，包括速度，失败数和大小；父进程从管道中读取这些值，计算后输出。这里只需使用一个简单的单向数据流管道即可，如下图所示。</p>
+<p>HTTP的请求格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET http://www.github.com:80/ HTTP/1.1 (CRLF)</span><br><span class="line">User-Agent: WPT 1.5 (CRLF)</span><br><span class="line">Host: www.github.com (CRLF)</span><br><span class="line">Pragma: no-cache (CRLF)</span><br><span class="line">Connection: close (CRLF)</span><br><span class="line">(CRLF)</span><br></pre></td></tr></table></figure>
+<p>HTTP请求和响应的具体报文格式及更详细的内容可以参照我的博文<a href="http://e29.github.io/2016/07/07/2016-7-7/" target="_blank" rel="external">HTTP协议</a>。</p>
+<h2 id="3-3-wpt函数"><a href="#3-3-wpt函数" class="headerlink" title="3.3 wpt函数"></a>3.3 wpt函数</h2><p>通过主机名和端口号建立套结字，并测试管道的可用性，使用fork函数创建子进程，在子进程中fork返回0，在父进程中返回大于0的值，出错则返回小于0的值。利用pid，让子进程执行wptcore函数对网站进行测试，并将得到的数据写入管道，包括速度，失败数和大小；父进程则继续运行，循环从管道中读取这些值，计算后输出。这里只需使用一个简单的单向数据流管道即可，如下图所示，仅描述管道一般原理，方向其实相反。</p>
 <p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/pipe.PNG" alt="管道示意图"></p>
-<h2 id="3-4-benchcore函数"><a href="#3-4-benchcore函数" class="headerlink" title="3.4 benchcore函数"></a>3.4 benchcore函数</h2><p>进行压力测试的核心函数。使用alarm函数计时并发送SIGALRM信号。遇到超时、套结字建立不成功、连接不成功、关闭套结字不成功等都算失败。</p>
+<h2 id="3-4-wptcore函数"><a href="#3-4-wptcore函数" class="headerlink" title="3.4 wptcore函数"></a>3.4 wptcore函数</h2><p>进行压力测试的核心函数，通过建立套结字发送请求消息，并读取响应消息来计算成功、失败、字节数。使用alarm函数计时并发送SIGALRM信号。遇到套结字建立不成功、读写套结字不成功、协议不支持、关闭套结字不成功等都算失败。</p>
 <ul>
 <li>头文件: <code>#include &lt;signal.h&gt;</code></li>
 <li>函数声明: <code>int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)</code></li>
@@ -258,7 +261,7 @@
 </ul>
 <p>参数结构sigaction定义如下:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct sigaction &#123;</span><br><span class="line">void (*sa_handler)(int);</span><br><span class="line">void (*sa_sigaction)(int, siginfo_t *, void *);</span><br><span class="line">sigset_t sa_mask;</span><br><span class="line">int sa_flags;</span><br><span class="line">void (*sa_restorer)(void);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>信号处理函数可以采用void (<em>sahandler)(int)或void (</em>sa_sigaction)(int, siginfo_t <em>, void </em>)。到底采用哪个要看sa_flags中是否设置了SA_SIGINFO位，如果设置了就采用void (<em>sa_sigaction)(int, siginfo_t </em>, void <em>)，此时可以向处理函数发送附加信息；默认情况下采用void (</em>sa_handler)(int)，此时只能向处理函数发送信号的数值。</p>
+<p>信号处理函数可以采用void (<em>sa_handler)(int)或void (</em>sa_sigaction)(int, siginfo_t<em>, void</em>)。到底采用哪个要看sa_flags中是否设置了SA_SIGINFO位，如果设置了就采用void (<em>sa_sigaction)(int, siginfo_t</em>, void<em>)，此时可以向处理函数发送附加信息；默认情况下采用void (</em>sa_handler)(int)，此时只能向处理函数发送信号的数值。</p>
 <h3 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
 <p>使用变量timerexpired来判断连接是否超时，声明为volatile，初始化为0，默认连接成功。当alarm超时后，会设置该变量为1。</p>
 </blockquote>
