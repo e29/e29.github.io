@@ -70,7 +70,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -377,7 +377,7 @@
 </table>
 <p>通过该函数对文件权限进行判断，判断是否具有可执行权限，如果有，就调用函数execute_cgi执行动态脚本，否则，调用函数server_file返回静态页面。</p>
 <h2 id="3-4-execute-cgi函数"><a href="#3-4-execute-cgi函数" class="headerlink" title="3.4 execute_cgi函数"></a>3.4 execute_cgi函数</h2><p>此函数用来执行动态脚本，以显示颜色为例。打开网页，连接服务器后，输入颜色，点击“Submit”后，传递HTTP的POST请求到服务器，服务器解析后得到method、path以及query_string。将这些参数传递给该函数，创建子进程，建立管道。从客户浏览器传入的POST数据，由父进程写入管道cgi_input；子进程从STDIN接受数据，即管道cgi_input，负责设置环境变量，并执行execl函数，结果将被传入STDOUT，到达管道cgi_output，父进程从cgi_output中读取相关信息返回给客户浏览器。这里需要使用一个双向数据流管道，如下图所示。</p>
-<p><img src="https://github.com/e29/e29.github.io/blob/master/images/double-pipe.PNG" alt="管道示意图"></p>
+<p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/double-pipe.PNG" alt="管道示意图"></p>
 <h3 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
 <p>CGI程序的特点是通过标准输入（stdin）和环境变量(可以理解成有两个传递数据的途径，二者相辅相成，其实跟请求方法是get或post也相关)来得到服务器的信息，并通过标准输出（stdout）向服务器输出信息。</p>
 </blockquote>
@@ -811,7 +811,7 @@
         <p>Web Pressure Test(WPT)是一个在Linux下使用的非常简单的网站压测工具。它使用fork()模拟多个客户端访问设定的URL，测试网站在压力下工作的性能，最多可以模拟3万个并发连接去测试网站的负载能力。</p>
 <hr>
 <h1 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1. 项目简介"></a>1. 项目简介</h1><p>一个简单的开源项目，在Linux下用于网站压力测试，内容虽然不多，但涉及方面很全，适合深入学习。</p>
-<ul>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><ul>
 <li>socket.c: 定义了Socket函数，用于对socket函数进行包裹。</li>
 <li>wpt.c: 用于命令行解析和创建并发进程，进行压力测试，并显示相应结果。</li>
 <li>makefile: 描述了整个工程的编译、连接等规则。</li>
@@ -822,19 +822,20 @@
 <p>包裹函数: 完成实际的函数调用，检查返回值，并在发生错误时终止进程，可以通过定义包裹函数来缩短程序。包裹函数名一般是实际函数名的首字母大写形式。</p>
 </blockquote>
 <hr>
-<h1 id="2-核心文件-wpt-c"><a href="#2-核心文件-wpt-c" class="headerlink" title="2. 核心文件: wpt.c"></a>2. 核心文件: wpt.c</h1><p>主要包含以下几个核心函数:</p>
-<ul>
+<h1 id="2-核心文件-wpt-c"><a href="#2-核心文件-wpt-c" class="headerlink" title="2. 核心文件: wpt.c"></a>2. 核心文件: wpt.c</h1><h3 id="核心函数"><a href="#核心函数" class="headerlink" title="核心函数"></a>核心函数</h3><ul>
 <li>main: 主要调用getopt_long函数处理命令行参数，紧接着调用以下函数。</li>
 <li>build_request: 主要用来创建http连接请求。</li>
 <li>wpt: 主要用于复制进程，通过子进程来测试http连接，并把测试结果写入管道，再由父进程读取管道信息，计算并输出相关测试信息。</li>
 <li>wptcore: 主要用于子进程对http请求进行测试。</li>
 </ul>
-<h1 id="3-细节实现"><a href="#3-细节实现" class="headerlink" title="3. 细节实现"></a>3. 细节实现</h1><h2 id="3-1-getopt-long函数"><a href="#3-1-getopt-long函数" class="headerlink" title="3.1 getopt_long函数"></a>3.1 getopt_long函数</h2><ul>
-<li>头文件: <code>#include &lt;getopt.h&gt;</code></li>
+<h1 id="3-细节实现"><a href="#3-细节实现" class="headerlink" title="3. 细节实现"></a>3. 细节实现</h1><h2 id="3-1-getopt-long函数"><a href="#3-1-getopt-long函数" class="headerlink" title="3.1 getopt_long函数"></a>3.1 getopt_long函数</h2><blockquote>
+<ul>
+<li>头文件: #include <getopt.h></getopt.h></li>
 <li>相关函数: getopt</li>
-<li>函数声明: <code>int getopt_long(int argc, char *const argv[], const char *opstring, const struct option *longopts, int *longindex)</code></li>
+<li>函数声明: int getopt_long(int argc, char<em> const argv[], const char</em> opstring, const struct option<em> longopts, int</em> longindex)</li>
 <li>函数功能: 用于解析命令行选项参数，支持长选项。</li>
 </ul>
+</blockquote>
 <p>getopt与getopt_long相似，而前者只有前三个参数，下面具体讲解getopt_long函数。</p>
 <p>函数中有两个默认的参数:<br>optarg: 如果一个选项有参数，则该参数存放在optarg中，这是一个char*类型。<br>optind: 下一个将被处理到的参数在argv中的下标值。</p>
 <p>前两个参数分别由main函数传入，分别代表参数的个数和参数详细值列表。opstring是选项参数组成的字符串，字符串opstring可以是下列元素: 单个字符，表示选项；单个字符后接一个冒号，表示该选项后必须跟一个参数，参数紧跟在选项后或以空格隔开，该参数的指针赋给optarg；单个字符后跟两个冒号，表示该选项后可以有参数也可以没有参数，如果有参数，参数必须紧跟在选项后不能以空格隔开，该参数的指针赋给optarg。</p>
@@ -846,24 +847,26 @@
 <p>通过while循环+switch…case…语句配合处理命令行选项，并结合optarg和optind检查参数的合法性。</p>
 </blockquote>
 <h2 id="3-2-build-request函数"><a href="#3-2-build-request函数" class="headerlink" title="3.2 build_request函数"></a>3.2 build_request函数</h2><p>主要用一些基本的C字符函数处理有代理或无代理情况下的主机名和段口号，并生成相应的请求消息。如果有代理，则直接根据请求方法和url生成request消息；如果没有代理，则采用url中的域名作为主机名，如果url中含有端口，则采用相应的端口，否则采用默认端口80。</p>
-<ul>
+<h3 id="C字符函数"><a href="#C字符函数" class="headerlink" title="C字符函数"></a>C字符函数</h3><ul>
 <li>strchr(string, char): 查找字符串中首次出现指定字符的位置，如果成功，返回该字符以及其后面的字符，如果失败，则返回NULL。</li>
 <li>strrchr(string, char): 查找字符在指定字符串中从正面开始的最后一次出现的位置，如果成功，返回该字符以及其后面的字符，如果失败，则返回NULL。</li>
 <li>strstr(str1, str2): 判断字符串str2是否是str1的子串。如果是，则该函数返回str2在str1中首次出现的地址；否则，返回NULL。</li>
 <li>strncasecmp(s1, s2): 比较参数s1和s2字符串前n个字符，比较时会自动忽略大小写的差异。如果相同，返回0；s1&gt;s2，返回大于0的值；s1&lt;s2，返回小于0的值。</li>
 <li>strcspn(s, reject): 参数s字符串的开头计算连续的字符, 而这些字符都完全不在参数reject 所指的字符串中.简单地说,若strcspn()返回的数值为n,则代表字符串s开头连续有n个字符都不含字符串reject 内的字符。</li>
 </ul>
-<p>HTTP的请求格式如下：</p>
+<p>本项目中HTTP的请求格式如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET http://www.github.com:80/ HTTP/1.1 (CRLF)</span><br><span class="line">User-Agent: WPT 1.5 (CRLF)</span><br><span class="line">Host: www.github.com (CRLF)</span><br><span class="line">Pragma: no-cache (CRLF)</span><br><span class="line">Connection: close (CRLF)</span><br><span class="line">(CRLF)</span><br></pre></td></tr></table></figure>
 <p>HTTP请求和响应的具体报文格式及更详细的内容可以参照我的博文<a href="http://e29.github.io/2016/07/07/2016-7-7/" target="_blank" rel="external">HTTP协议</a>。</p>
 <h2 id="3-3-wpt函数"><a href="#3-3-wpt函数" class="headerlink" title="3.3 wpt函数"></a>3.3 wpt函数</h2><p>通过主机名和端口号建立套结字，并测试管道的可用性，使用fork函数创建子进程，在子进程中fork返回0，在父进程中返回大于0的值，出错则返回小于0的值。利用pid，让子进程执行wptcore函数对网站进行测试，并将得到的数据写入管道，包括速度，失败数和大小；父进程则继续运行，循环从管道中读取这些值，计算后输出。这里只需使用一个简单的单向数据流管道即可，如下图所示，仅描述管道一般原理，方向其实相反。</p>
 <p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/pipe.PNG" alt="管道示意图"></p>
 <h2 id="3-4-wptcore函数"><a href="#3-4-wptcore函数" class="headerlink" title="3.4 wptcore函数"></a>3.4 wptcore函数</h2><p>进行压力测试的核心函数，通过建立套结字发送请求消息，并读取响应消息来计算成功、失败、字节数。使用alarm函数计时并发送SIGALRM信号。遇到套结字建立不成功、读写套结字不成功、协议不支持、关闭套结字不成功等都算失败。</p>
+<blockquote>
 <ul>
-<li>头文件: <code>#include &lt;signal.h&gt;</code></li>
-<li>函数声明: <code>int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)</code></li>
+<li>头文件: #include <signal.h></signal.h></li>
+<li>函数声明: int sigaction(int signum, const struct sigaction <em>act, struct sigaction </em>oldact)</li>
 <li>函数功能: sigaction()会依参数signum指定的信号编号来设置该信号的处理函数。参数signum可以指定SIGKILL和SIGSTOP以外的所有信号。</li>
 </ul>
+</blockquote>
 <p>参数结构sigaction定义如下:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct sigaction &#123;</span><br><span class="line">void (*sa_handler)(int);</span><br><span class="line">void (*sa_sigaction)(int, siginfo_t *, void *);</span><br><span class="line">sigset_t sa_mask;</span><br><span class="line">int sa_flags;</span><br><span class="line">void (*sa_restorer)(void);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>信号处理函数可以采用void (<em>sa_handler)(int)或void (</em>sa_sigaction)(int, siginfo_t<em>, void</em>)。到底采用哪个要看sa_flags中是否设置了SA_SIGINFO位，如果设置了就采用void (<em>sa_sigaction)(int, siginfo_t</em>, void<em>)，此时可以向处理函数发送附加信息；默认情况下采用void (</em>sa_handler)(int)，此时只能向处理函数发送信号的数值。</p>
@@ -941,9 +944,17 @@
 <h3 id="调试问题2"><a href="#调试问题2" class="headerlink" title="调试问题2"></a>调试问题2</h3><blockquote>
 <p>第二个问题，发现连接总是失败，设置断点后，发现socket函数中的host值总是http:://www.而不并是所希望的www.baidu.com，推测应该在获取主机名时错误，而获取主机名的主要部分在build_request中，进一步检查，发现在URL截取的时候，漏加了i，漏加了1，共有两处。</p>
 </blockquote>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><p><strong>对最大连接数测试</strong></p>
+<p>理论上来说，最多可以支持3万多个并发连接，因为最多可以有32768个进程，这个值是根据/proc/kernel/pid_max得到的。但考虑到系统对内存、CPU等方面的限制，一般会有一个上限值，这个值可以通过ulimit -u进行修改，CentOS下该值默认是4096。我们测试了3万了连接，根据设置的出错提示，发现进程号到4000左右时，就提示出错了。这一结果是正常的，创建的进程加上系统自身的服务进程，差不多是这个值。</p>
+<hr>
+<p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/wpttest1.png" alt="wpttest1"></p>
+<p><strong>对网站进行测试</strong></p>
+<p>对几个网站进行了一些简单的测试，没做极限测试，因为……</p>
+<hr>
+<p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/wpttest2.png" alt="wpttest2"></p>
 <hr>
 <h1 id="5-makefile"><a href="#5-makefile" class="headerlink" title="5. makefile"></a>5. makefile</h1><p>makefile也是项目中重要的一环，也需要认真学习，找了相关的文档，内容很是多，看了一遍。这个项目较小，但也按照相应的形式进行编写，以后如果有机会做大的项目，维护起来，这是必不可少的！</p>
-<p>首先，设置相关的标志信息，如CFLAGS等。紧接着是all，最终生成的文件；还有一些常见的伪目标，如install，安装文件到相应的目录，为文件添加man帮助到相应目录，为文件添加版权信息和修改日志到相应目录；tar，打包命令；最后是clean命令等。</p>
+<p>首先，设置相关的标志信息，如CFLAGS等。紧接着是all，最终生成的文件；还有一些常见的伪目标，如install，安装文件到相应的目录，为文件添加man帮助到相应目录，为文件添加版权信息和修改日志到相应目录；tar，打包命令；最后是clean命令清除相关的中间文件等。</p>
 <hr>
 <h1 id="6-完善与维护"><a href="#6-完善与维护" class="headerlink" title="6. 完善与维护"></a>6. 完善与维护</h1><p>大功告成后，还需部分完善：例如，详细的man信息，版权信息，修改日志，控制信息等。同时将项目上传至Github，分享和维护。Github的相关使用，不在这里详述，因为我们之前已经hello world过啦！</p>
 <blockquote>
@@ -1008,20 +1019,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Linus曾谈到，他喜欢core low-level coding。今天来用一个简单的例子看一下什么叫core low-level coding。<br>这个问题是在做一道简单的算法题的时候发现的，自己从来没有看过这样做法，指针真是蕴含着无穷的魅力。</p>
+        <p>Linus曾谈到，他喜欢<strong>core low-level coding</strong>。今天来用一个简单的例子看一下什么叫core low-level coding。<br>这个问题是在做一道简单的算法题的时候发现的，自己从来没有看过这样做法，指针真是蕴含着无穷的魅力。</p>
 <hr>
-<h1 id="1-标准化的删除"><a href="#1-标准化的删除" class="headerlink" title="1. 标准化的删除"></a>1. 标准化的删除</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">typedef struct node&#123;</span><br><span class="line">    struct node * next;</span><br><span class="line">    ...</span><br><span class="line">&#125;node;</span><br><span class="line"></span><br><span class="line">typedef bool (* remove_fn)(node const *v);</span><br><span class="line"></span><br><span class="line">node * remove_<span class="keyword">if</span>(node *head, remove_fn rm)&#123;</span><br><span class="line">    <span class="keyword">for</span> (node *prev = NULL, *curr = head; curr != NULL;)&#123;</span><br><span class="line">        node * const next = curr-&gt;next;</span><br><span class="line">        <span class="keyword">if</span> (rm(curr))&#123;</span><br><span class="line">           <span class="keyword">if</span> (prev)&#123;</span><br><span class="line">              prev-&gt;next = next;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">else</span> &#123;</span><br><span class="line">             head = next;</span><br><span class="line">           &#125;</span><br><span class="line">           free(curr);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          curr = next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> head;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="1-标准化的删除"><a href="#1-标准化的删除" class="headerlink" title="1. 标准化的删除"></a>1. 标准化的删除</h1><p>定义链表结点结构和一个指向判断结点是否满足删除条件的函数的指针。设计和实现一个删除函数删除满足特定条件的结点。</p>
+<h3 id="实现函数"><a href="#实现函数" class="headerlink" title="实现函数"></a>实现函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">typedef struct node&#123;</span><br><span class="line">    struct node * next;</span><br><span class="line">    ...</span><br><span class="line">&#125;node;</span><br><span class="line"></span><br><span class="line">typedef bool (* remove_fn)(node const *v);</span><br><span class="line"></span><br><span class="line">node * remove_<span class="keyword">if</span>(node *head, remove_fn rm)&#123;</span><br><span class="line">    <span class="keyword">for</span> (node *prev = NULL, *curr = head; curr != NULL;)&#123;</span><br><span class="line">        node * const next = curr-&gt;next;</span><br><span class="line">        <span class="keyword">if</span> (rm(curr))&#123;</span><br><span class="line">           <span class="keyword">if</span> (prev)&#123;</span><br><span class="line">              prev-&gt;next = next;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">else</span> &#123;</span><br><span class="line">             head = next;</span><br><span class="line">           &#125;</span><br><span class="line">           free(curr);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          curr = next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> head; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
-<p>需要一个额外的指针，也是大多数教科书中提到的，previous；<br>需要做边界条件检查：看curr是否为链表头。</p>
+<ul>
+<li>需要一个额外的指针，也是大多数教科书中提到的，previous；</li>
+<li>需要做边界条件检查：看curr是否为链表头。</li>
+</ul>
 </blockquote>
 <hr>
-<h1 id="2-二级指针"><a href="#2-二级指针" class="headerlink" title="2. 二级指针"></a>2. 二级指针</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void remove_<span class="keyword">if</span>(node **head, remove_fn rm)&#123;</span><br><span class="line">    <span class="keyword">for</span> (node ** curr = head; *curr;)&#123;</span><br><span class="line">        node * entry = *curr;</span><br><span class="line">        <span class="keyword">if</span> (rm(entry))&#123;</span><br><span class="line">           *curr = entry-&gt;next;</span><br><span class="line">           free(entry);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">           curr = &amp;(entry-&gt;next);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2-二级指针"><a href="#2-二级指针" class="headerlink" title="2. 二级指针"></a>2. 二级指针</h1><h3 id="实现函数-1"><a href="#实现函数-1" class="headerlink" title="实现函数"></a>实现函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void remove_<span class="keyword">if</span>(node **head, remove_fn rm)&#123;</span><br><span class="line">    <span class="keyword">for</span> (node ** curr = head; *curr;)&#123;</span><br><span class="line">        node * entry = *curr;</span><br><span class="line">        <span class="keyword">if</span> (rm(entry))&#123;</span><br><span class="line">           *curr = entry-&gt;next;</span><br><span class="line">           free(entry);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">           curr = &amp;(entry-&gt;next);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
-<p>不再需要previous指针，这里使用的链表指针的指针，curr代表当前结点的next指针的地址，*curr代表了当前结点的next指针，即指向下一结点的指针。<br>比较抽象，画图可以更好的理解，一般，curr指向当前结点，代表其地址，而现在，curr指向当前结点中的next指针域，代表其地址。<br>这里的关键是：在链表中的链接本身就是指针，所以可以使用指针的指针来作为改变链表的优先选择。</p>
+<ul>
+<li>不再需要previous指针，这里使用的链表指针的指针，curr代表当前结点的next指针的地址，*curr代表了当前结点的next指针，即指向下一结点的指针。</li>
+<li>比较抽象，画图可以更好的理解，一般，curr指向当前结点，代表其地址，而现在，curr指向当前结点中的next指针域，代表其地址。</li>
+<li>这里的关键是：在<strong>链表中的链接本身就是指针</strong>，所以可以使用指针的指针来作为改变链表的优先选择。</li>
+</ul>
 </blockquote>
 <hr>
 <h1 id="3-简单的应用"><a href="#3-简单的应用" class="headerlink" title="3. 简单的应用"></a>3. 简单的应用</h1><p>删除链表中倒数第n个结点，并返回该链表。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">LinkNode* rm(LinkNode * head, int n)&#123;</span><br><span class="line">    LinkNode** t1 = &amp;head, *t2 = head;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (int i = 1; i &lt; n; i++)&#123;</span><br><span class="line">    	t2 = t2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (t2-&gt;next != NULL)&#123;</span><br><span class="line">	 t1 = &amp;((*t1)-&gt;next);</span><br><span class="line">         t2 = t2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    *t1 = (*t1)-&gt;next;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实现函数-2"><a href="#实现函数-2" class="headerlink" title="实现函数"></a>实现函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">LinkNode* rm(LinkNode * head, int n)&#123;</span><br><span class="line">    LinkNode** t1 = &amp;head, *t2 = head;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (int i = 1; i &lt; n; i++)&#123;</span><br><span class="line">    	t2 = t2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (t2-&gt;next != NULL)&#123;</span><br><span class="line">	 t1 = &amp;((*t1)-&gt;next);</span><br><span class="line">         t2 = t2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    *t1 = (*t1)-&gt;next;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1078,12 +1097,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Hello World 1是在Windows底下完成的，这次将其移植到Linux下。没有太多的变化，在CentOS下操作异常的方便，安装完必要软件后，没有很多的错误，兼容性极佳，直接将当初Hexo Init的文件夹拷贝到Linux下就可以了。不过因为换了系统，需要重新上传SSH Key，可以直接跳到第三步。</p>
+        <p>Hello World 1中的博客搭建与配置是在Windows底下完成的，这次将其移植到Linux下。没有太多的变化，在CentOS下操作异常的方便，安装完必要软件后，没有很多的错误，兼容性极佳，直接将当初Hexo Init的文件夹拷贝到Linux下就可以了。不过因为换了系统，需要重新上传SSH Key，可以直接跳到第三步。</p>
 <hr>
 <h1 id="1-系统环境"><a href="#1-系统环境" class="headerlink" title="1. 系统环境"></a>1. 系统环境</h1><h3 id="常见问题1"><a href="#常见问题1" class="headerlink" title="常见问题1"></a>常见问题1</h3><blockquote>
 <p>在安装Node.js时，要注意下载的版本，是二进制文件，还是源代码。默认下载的是二进制文件，非常方便，只需将Node的bin目录放入PATH中，即可在任意处使用node和npm命令。如果下载的是源代码，则需要进行编译和安装，这里不详述。</p>
 </blockquote>
-<h3 id="常见问题2"><a href="#常见问题2" class="headerlink" title="常见问题2"></a>常见问题2</h3><blockquote>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><blockquote>
 <p>端口问题在Linux下消失了，默认4000端口就可以用，严格的Linxu没有不知名的端口占用，好评！</p>
 </blockquote>
 <hr>
@@ -1148,9 +1167,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>终于建立了自己的博客，现在正在完成最后一步，写第一篇文章，关于博客的诞生。这也是第一步。</p>
+        <p>终于建立了自己的博客，现在正在完成最后一步————写第一篇文章，关于博客的诞生。这也是第一步。</p>
 <hr>
-<h1 id="1-系统环境"><a href="#1-系统环境" class="headerlink" title="1. 系统环境"></a>1. 系统环境</h1><p>采用Hexo+Github pages搭建自己的博客。</p>
+<h1 id="1-系统环境"><a href="#1-系统环境" class="headerlink" title="1. 系统环境"></a>1. 系统环境</h1><p>采用Hexo + Github pages搭建自己的博客。</p>
 <h3 id="需要的安装程序"><a href="#需要的安装程序" class="headerlink" title="需要的安装程序"></a>需要的安装程序</h3><blockquote>
 <ul>
 <li>Node.js</li>
@@ -1167,7 +1186,7 @@
 <h1 id="2-主题安装"><a href="#2-主题安装" class="headerlink" title="2. 主题安装"></a>2. 主题安装</h1><p>可以从Hexo官网寻找Theme或者使用他人推荐的主题。</p>
 <h3 id="操作命令-1"><a href="#操作命令-1" class="headerlink" title="操作命令"></a>操作命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/xxx/xxx.git theme/xxx</span><br><span class="line"><span class="built_in">cd</span> theme/xxx</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
 <p>下载和获得最新的主题后，需要启动该主题，在Hexo的配置文件中启用：修改目录下的_config.yml中的theme关键字后的内容为xxx。</p>
-<h3 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><blockquote>
 <p>theme后的冒号后有空格。</p>
 </blockquote>
 <hr>
@@ -1181,7 +1200,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy: </span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:username/username.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 <p>完成后，进行部署：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-<h3 id="常见问题-2"><a href="#常见问题-2" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
+<h3 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h3><blockquote>
 <p>type、repo、branch后的冒号均有空格。</p>
 </blockquote>
 
