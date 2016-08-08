@@ -15,7 +15,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/pipe.PNG">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/wpttest1.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/wpttest2.png">
-<meta property="og:updated_time" content="2016-08-07T02:02:27.238Z">
+<meta property="og:updated_time" content="2016-08-08T02:06:05.396Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web Pressure Test">
 <meta name="twitter:description" content="学习的第一个项目，源自开源项目Webbench。">
@@ -75,7 +75,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -215,7 +215,7 @@
 <li>README.md: 描述了项目的安装及使用方法。</li>
 <li>centOS: 包含了项目的更改日志、控制信息、版权及相关规则和目录。</li>
 </ul>
-<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
+<h3 id="扩展介绍"><a href="#扩展介绍" class="headerlink" title="扩展介绍"></a>扩展介绍</h3><blockquote>
 <p>包裹函数: 完成实际的函数调用，检查返回值，并在发生错误时终止进程，可以通过定义包裹函数来缩短程序。包裹函数名一般是实际函数名的首字母大写形式。</p>
 </blockquote>
 <hr>
@@ -227,9 +227,9 @@
 </ul>
 <h1 id="3-细节实现"><a href="#3-细节实现" class="headerlink" title="3. 细节实现"></a>3. 细节实现</h1><h2 id="3-1-getopt-long函数"><a href="#3-1-getopt-long函数" class="headerlink" title="3.1 getopt_long函数"></a>3.1 getopt_long函数</h2><blockquote>
 <ul>
-<li>头文件: #include <getopt.h></getopt.h></li>
+<li>头文件: <code>#include &lt;getopt.h&gt;</code></li>
 <li>相关函数: getopt</li>
-<li>函数声明: int getopt_long(int argc, char<em> const argv[], const char</em> opstring, const struct option<em> longopts, int</em> longindex)</li>
+<li>函数声明: <code>int getopt_long(int argc, char* const argv[], const char* opstring, const struct option* longopts, int* longindex)</code></li>
 <li>函数功能: 用于解析命令行选项参数，支持长选项。</li>
 </ul>
 </blockquote>
@@ -259,15 +259,15 @@
 <h2 id="3-4-wptcore函数"><a href="#3-4-wptcore函数" class="headerlink" title="3.4 wptcore函数"></a>3.4 wptcore函数</h2><p>进行压力测试的核心函数，通过建立套结字发送请求消息，并读取响应消息来计算成功、失败、字节数。使用alarm函数计时并发送SIGALRM信号。遇到套结字建立不成功、读写套结字不成功、协议不支持、关闭套结字不成功等都算失败。</p>
 <blockquote>
 <ul>
-<li>头文件: #include <signal.h></signal.h></li>
-<li>函数声明: int sigaction(int signum, const struct sigaction <em>act, struct sigaction </em>oldact)</li>
+<li>头文件: <code>#include &lt;signal.h&gt;</code></li>
+<li>函数声明: <code>int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)</code></li>
 <li>函数功能: sigaction()会依参数signum指定的信号编号来设置该信号的处理函数。参数signum可以指定SIGKILL和SIGSTOP以外的所有信号。</li>
 </ul>
 </blockquote>
 <p>参数结构sigaction定义如下:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct sigaction &#123;</span><br><span class="line">void (*sa_handler)(int);</span><br><span class="line">void (*sa_sigaction)(int, siginfo_t *, void *);</span><br><span class="line">sigset_t sa_mask;</span><br><span class="line">int sa_flags;</span><br><span class="line">void (*sa_restorer)(void);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>信号处理函数可以采用void (<em>sa_handler)(int)或void (</em>sa_sigaction)(int, siginfo_t<em>, void</em>)。到底采用哪个要看sa_flags中是否设置了SA_SIGINFO位，如果设置了就采用void (<em>sa_sigaction)(int, siginfo_t</em>, void<em>)，此时可以向处理函数发送附加信息；默认情况下采用void (</em>sa_handler)(int)，此时只能向处理函数发送信号的数值。</p>
-<h3 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
+<h3 id="设计方法-1"><a href="#设计方法-1" class="headerlink" title="设计方法"></a>设计方法</h3><blockquote>
 <p>使用变量timerexpired来判断连接是否超时，声明为volatile，初始化为0，默认连接成功。当alarm超时后，会设置该变量为1。</p>
 </blockquote>
 <hr>
@@ -341,11 +341,15 @@
 <h3 id="调试问题2"><a href="#调试问题2" class="headerlink" title="调试问题2"></a>调试问题2</h3><blockquote>
 <p>第二个问题，发现连接总是失败，设置断点后，发现socket函数中的host值总是http:://www.而不并是所希望的www.baidu.com，推测应该在获取主机名时错误，而获取主机名的主要部分在build_request中，进一步检查，发现在URL截取的时候，漏加了i，漏加了1，共有两处。</p>
 </blockquote>
-<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><p><strong>对最大连接数测试</strong></p>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><ul>
+<li><strong>对最大连接数测试</strong></li>
+</ul>
 <p>理论上来说，最多可以支持3万多个并发连接，因为最多可以有32768个进程，这个值是根据/proc/kernel/pid_max得到的。但考虑到系统对内存、CPU等方面的限制，一般会有一个上限值，这个值可以通过ulimit -u进行修改，CentOS下该值默认是4096。我们测试了3万了连接，根据设置的出错提示，发现进程号到4000左右时，就提示出错了。这一结果是正常的，创建的进程加上系统自身的服务进程，差不多是这个值。</p>
 <hr>
 <p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/wpttest1.png" alt="wpttest1"></p>
-<p><strong>对网站进行测试</strong></p>
+<ul>
+<li><strong>对网站进行测试</strong></li>
+</ul>
 <p>对几个网站进行了一些简单的测试，没做极限测试，因为……</p>
 <hr>
 <p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/wpttest2.png" alt="wpttest2"></p>

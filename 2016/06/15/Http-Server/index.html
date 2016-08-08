@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time1.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time2.png">
-<meta property="og:updated_time" content="2016-08-05T07:54:13.790Z">
+<meta property="og:updated_time" content="2016-08-08T02:06:00.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Simple Http Server">
 <meta name="twitter:description" content="学习的第二个项目，源自开源项目TinyHttpd。">
@@ -77,7 +77,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -209,22 +209,21 @@
       
         <p>Simple Http Server(SHS)是Linux下一个超轻量级的Http Server，可以接受用户的静态或动态请求，对于大致了解服务器的工作流程、熟悉HTTP协议及UNIX网络编程有一定帮助。</p>
 <hr>
-<h1 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1. 项目简介"></a>1. 项目简介</h1><p>一个简单的开源项目，对于熟悉HTTP协议，服务器的工作流程，特别是UNIX网络编程，有较大的帮助。同时还继续用到了管道等进程间通信的知识。</p>
-<ul>
+<h1 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1. 项目简介"></a>1. 项目简介</h1><p>一个简单的开源项目，对于熟悉HTTP协议，服务器的工作流程，特别是UNIX网络编程，有较大的帮助。同时还继续用到了稍复杂的双向管道等进程间通信的知识。</p>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><ul>
 <li>httpd.c: 服务器端主程序，用于建立一个http Server。</li>
 <li>simpleclient.c: 服务器简易测试程序，一个客户端，用于测试服务器的连通。</li>
 <li>makefile: 描述了整个工程的编译、连接等规则。</li>
 <li>README.md: 描述了项目的安装及使用方法。</li>
-<li>htdocs: 服务器本地文件夹，包含一些网页和CGI脚本。</li>
+<li>httpdocs: 服务器本地文件夹，包含一些网页和CGI脚本。</li>
 </ul>
 <hr>
-<h1 id="2-核心文件-httpd-c"><a href="#2-核心文件-httpd-c" class="headerlink" title="2. 核心文件: httpd.c"></a>2. 核心文件: httpd.c</h1><p>主要包含以下几个核心函数:</p>
-<ul>
+<h1 id="2-核心文件-httpd-c"><a href="#2-核心文件-httpd-c" class="headerlink" title="2. 核心文件: httpd.c"></a>2. 核心文件: httpd.c</h1><h3 id="核心函数"><a href="#核心函数" class="headerlink" title="核心函数"></a>核心函数</h3><ul>
 <li>main:    主要用于创建并监听服务器连接，当有连接到来时，创建线程对其套结字进行处理。</li>
 <li>startup: 主要用于初始化httpd服务，包括socket、bind、listen等。</li>
 <li>accept_request: 主要用于处理从监听套结字上获得的一个HTTP请求。</li>
 <li>get_line: 主要用于读取套结字的一行，把/r/n或/n等结尾都统一为换行结束符/n。</li>
-<li>server_file: 主要用于处理静态请求，主要调用cat函数把服务器文件返回给浏览器。</li>
+<li>server_file: 主要用于处理静态请求，调用cat函数把服务器文件返回给浏览器。</li>
 <li>execute_cgi: 主要用于处理动态请求，运行CGI处理程序。</li>
 <li>headers: 把HTTP响应的头部写到套结字中。</li>
 <li>cat: 读取服务器上某个文件并写到套结字中。</li>
@@ -234,7 +233,7 @@
 <h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
 <p>Windows中的结束符为“\r\n”，‘\r‘（回车符）代表每次光标移动到本行的行首位置处，‘\n’（换行符）代表每次光标移动到下一行的行首位置处；在Linux中的结束符为‘\n’；在Mac中的结束符为‘\r‘。在Linux中遇到‘\n’会进行回车+换行的操作，回车符反而只会作为控制字符（“^M”）显示，不会发生回车操作；而Windows中要“\r\n”才会回车+换行，缺少一个控制符或者顺序不对都不能正确的另起一行。</p>
 </blockquote>
-<h2 id="3-2-unimplement函数"><a href="#3-2-unimplement函数" class="headerlink" title="3.2 unimplement函数"></a>3.2 unimplement函数</h2><p>httpd.c中还有不少类似的函数，如not_found、headers、cannot_execute、bad_request等，它们都是根据HTTP的请求，模拟的HTTP响应。HTTP请求和响应的具体报文格式可以参照我的上一片博文<a href="http://e29.github.io/2016/07/07/2016-7-7/" target="_blank" rel="external">HTTP协议</a>。</p>
+<h2 id="3-2-unimplement函数"><a href="#3-2-unimplement函数" class="headerlink" title="3.2 unimplement函数"></a>3.2 unimplement函数</h2><p>httpd.c中还有不少类似的函数，如not_found、headers、cannot_execute、bad_request等，它们都是根据HTTP的请求，模拟的HTTP响应。HTTP请求和响应的具体报文格式可以参照我的博文<a href="http://e29.github.io/2016/07/07/2016-7-7/" target="_blank" rel="external">HTTP协议</a>。</p>
 <h2 id="3-3-stat函数"><a href="#3-3-stat函数" class="headerlink" title="3.3 stat函数"></a>3.3 stat函数</h2><ul>
 <li>头文件: <code>#include &lt;stat.h&gt; #include &lt;unistd.h&gt;</code></li>
 <li>函数声明: <code>int stat(const char *file_name,struct stat *buf)</code></li>
@@ -392,9 +391,12 @@
 </tbody>
 </table>
 <p>通过该函数对文件权限进行判断，判断是否具有可执行权限，如果有，就调用函数execute_cgi执行动态脚本，否则，调用函数server_file返回静态页面。</p>
-<h2 id="3-4-execute-cgi函数"><a href="#3-4-execute-cgi函数" class="headerlink" title="3.4 execute_cgi函数"></a>3.4 execute_cgi函数</h2><p>此函数用来执行动态脚本，以显示颜色为例。打开网页，连接服务器后，输入颜色，点击“Submit”后，传递HTTP的POST请求到服务器，服务器解析后得到method、path以及query_string。将这些参数传递给该函数，创建子进程，建立管道。从客户浏览器传入的POST数据，由父进程写入管道cgi_input；子进程从STDIN接受数据，即管道cgi_input，负责设置环境变量，并执行execl函数，结果将被传入STDOUT，到达管道cgi_output，父进程从cgi_output中读取相关信息返回给客户浏览器。这里需要使用一个双向数据流管道，如下图所示。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><blockquote>
+<p>相关的cgi文件要增加可执行权限，否则不会被当作可执行文件。</p>
+</blockquote>
+<h2 id="3-4-execute-cgi函数"><a href="#3-4-execute-cgi函数" class="headerlink" title="3.4 execute_cgi函数"></a>3.4 execute_cgi函数</h2><p>当遇到服务器端的POST请求以及GET请求带有?参数时，用此函数来执行动态脚本。以显示颜色为例。打开网页，连接服务器后，输入颜色，点击“Submit”后，传递HTTP的POST请求到服务器，服务器解析后得到method、path。将这些参数传递给该函数，创建子进程，建立管道。从客户浏览器传入的POST数据，由父进程写入管道cgi_input[1]；子进程从STDIN接受数据，即管道cgi_input[0]，负责设置环境变量，并执行execl函数，结果将被传入STDOUT，即管道cgi_output[1]，父进程从cgi_output[0]中读取相关信息返回给客户浏览器。这里需要使用一个双向数据流管道，如下图所示。</p>
 <p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/double-pipe.PNG" alt="管道示意图"></p>
-<h3 id="常见问题-1"><a href="#常见问题-1" class="headerlink" title="常见问题"></a>常见问题</h3><blockquote>
+<h3 id="扩展介绍"><a href="#扩展介绍" class="headerlink" title="扩展介绍"></a>扩展介绍</h3><blockquote>
 <p>CGI程序的特点是通过标准输入（stdin）和环境变量(可以理解成有两个传递数据的途径，二者相辅相成，其实跟请求方法是get或post也相关)来得到服务器的信息，并通过标准输出（stdout）向服务器输出信息。</p>
 </blockquote>
 <hr>
@@ -404,8 +406,8 @@
 <h3 id="调试问题1"><a href="#调试问题1" class="headerlink" title="调试问题1"></a>调试问题1</h3><blockquote>
 <p>在创建线程时，有时会自动的创建两个线程，没有找到原因，继续运行时，最后都以SIGPIPE信号终止。信号的原因：连接建立，若某一端关闭连接，而另一端仍然向它写数据，第一次写数据后会收到RST响应，此后再写数据，内核将向进程发出SIGPIPE信号，通知进程此连接已经断开。而SIGPIPE信号的默认处理是终止程序，导致上述问题的发生。</p>
 </blockquote>
-<h2 id="显示颜色："><a href="#显示颜色：" class="headerlink" title="显示颜色："></a><strong>显示颜色</strong>：</h2><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue1.png" alt="blue1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue2.png" alt="blue2"></p>
-<h2 id="显示服务器时间："><a href="#显示服务器时间：" class="headerlink" title="显示服务器时间："></a><strong>显示服务器时间</strong>：</h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time1.png" alt="time1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time2.png" alt="time2"></p>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><h2 id="显示颜色"><a href="#显示颜色" class="headerlink" title="- 显示颜色"></a>- <strong>显示颜色</strong></h2><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue1.png" alt="blue1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue2.png" alt="blue2"></p>
+<h2 id="显示服务器时间"><a href="#显示服务器时间" class="headerlink" title="- 显示服务器时间"></a>- <strong>显示服务器时间</strong></h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time1.png" alt="time1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time2.png" alt="time2"></p>
 <hr>
 <h1 id="5-完善与维护"><a href="#5-完善与维护" class="headerlink" title="5. 完善与维护"></a>5. 完善与维护</h1><p>完成后，将项目上传至Github维护。</p>
 <blockquote>
