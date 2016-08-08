@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time1.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time2.png">
-<meta property="og:updated_time" content="2016-08-08T02:06:00.988Z">
+<meta property="og:updated_time" content="2016-08-08T03:10:50.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Simple Http Server">
 <meta name="twitter:description" content="学习的第二个项目，源自开源项目TinyHttpd。">
@@ -77,7 +77,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -234,11 +234,13 @@
 <p>Windows中的结束符为“\r\n”，‘\r‘（回车符）代表每次光标移动到本行的行首位置处，‘\n’（换行符）代表每次光标移动到下一行的行首位置处；在Linux中的结束符为‘\n’；在Mac中的结束符为‘\r‘。在Linux中遇到‘\n’会进行回车+换行的操作，回车符反而只会作为控制字符（“^M”）显示，不会发生回车操作；而Windows中要“\r\n”才会回车+换行，缺少一个控制符或者顺序不对都不能正确的另起一行。</p>
 </blockquote>
 <h2 id="3-2-unimplement函数"><a href="#3-2-unimplement函数" class="headerlink" title="3.2 unimplement函数"></a>3.2 unimplement函数</h2><p>httpd.c中还有不少类似的函数，如not_found、headers、cannot_execute、bad_request等，它们都是根据HTTP的请求，模拟的HTTP响应。HTTP请求和响应的具体报文格式可以参照我的博文<a href="http://e29.github.io/2016/07/07/2016-7-7/" target="_blank" rel="external">HTTP协议</a>。</p>
-<h2 id="3-3-stat函数"><a href="#3-3-stat函数" class="headerlink" title="3.3 stat函数"></a>3.3 stat函数</h2><ul>
+<h2 id="3-3-stat函数"><a href="#3-3-stat函数" class="headerlink" title="3.3 stat函数"></a>3.3 stat函数</h2><blockquote>
+<ul>
 <li>头文件: <code>#include &lt;stat.h&gt; #include &lt;unistd.h&gt;</code></li>
 <li>函数声明: <code>int stat(const char *file_name,struct stat *buf)</code></li>
 <li>函数功能: 通过文件名filename获取文件信息，并保存在buf所指的结构体stat中</li>
 </ul>
+</blockquote>
 <p>参数结构stat定义如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">struct <span class="built_in">stat</span>&#123;</span><br><span class="line">  dev_t st_dev;</span><br><span class="line">  ino_t st_ino;</span><br><span class="line">  mode_t st_mode;</span><br><span class="line">  nlink_t st_nlink;</span><br><span class="line">  uid_t st_uid;</span><br><span class="line">  git_t st_gid;</span><br><span class="line">  dev_t st_rdev;</span><br><span class="line">  off_t st_size;</span><br><span class="line">  unsigned long st_blksize;</span><br><span class="line">  unsigned long st_blocks;</span><br><span class="line">  time_t st_atime;</span><br><span class="line">  time_t st_mtime;</span><br><span class="line">  time_t st_ctime;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <table>
@@ -403,11 +405,19 @@
 <h1 id="4-调试"><a href="#4-调试" class="headerlink" title="4. 调试"></a>4. 调试</h1><p>有了前一个项目的GDB调试经验，这个调试起来较为方便，详细的GDB操作可以查看上一个项目的博文。这里是先开启服务器再进行调试。</p>
 <p>可以使用如下命令找到httpd的进程号并开启GDB调试：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep httpd</span><br><span class="line">gdb attach xxx</span><br></pre></td></tr></table></figure>
-<h3 id="调试问题1"><a href="#调试问题1" class="headerlink" title="调试问题1"></a>调试问题1</h3><blockquote>
+<h3 id="调试问题"><a href="#调试问题" class="headerlink" title="调试问题"></a>调试问题</h3><blockquote>
 <p>在创建线程时，有时会自动的创建两个线程，没有找到原因，继续运行时，最后都以SIGPIPE信号终止。信号的原因：连接建立，若某一端关闭连接，而另一端仍然向它写数据，第一次写数据后会收到RST响应，此后再写数据，内核将向进程发出SIGPIPE信号，通知进程此连接已经断开。而SIGPIPE信号的默认处理是终止程序，导致上述问题的发生。</p>
 </blockquote>
-<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><h2 id="显示颜色"><a href="#显示颜色" class="headerlink" title="- 显示颜色"></a>- <strong>显示颜色</strong></h2><h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue1.png" alt="blue1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue2.png" alt="blue2"></p>
-<h2 id="显示服务器时间"><a href="#显示服务器时间" class="headerlink" title="- 显示服务器时间"></a>- <strong>显示服务器时间</strong></h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time1.png" alt="time1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time2.png" alt="time2"></p>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><ul>
+<li>显示颜色</li>
+</ul>
+<hr>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue1.png" alt="blue1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/blue2.png" alt="blue2"></p>
+<ul>
+<li>显示服务器时间</li>
+</ul>
+<hr>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time1.png" alt="time1"></h2><p><img src="https://raw.githubusercontent.com/e29/e29.github.io/master/images/time2.png" alt="time2"></p>
 <hr>
 <h1 id="5-完善与维护"><a href="#5-完善与维护" class="headerlink" title="5. 完善与维护"></a>5. 完善与维护</h1><p>完成后，将项目上传至Github维护。</p>
 <blockquote>
